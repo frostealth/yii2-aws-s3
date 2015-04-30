@@ -15,7 +15,7 @@ interface StorageInterface
      *
      * @return \Guzzle\Service\Resource\Model
      */
-    public function get($filename, $saveAs = '');
+    public function get($filename, $saveAs = null);
 
     /**
      * @param string $filename
