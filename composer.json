@@ -1,0 +1,28 @@
+{
+  "name": "frostealth/yii2-aws-s3",
+  "description": "Yii2 AWS S3 component",
+  "keywords": ["s3", "yii2", "aws-s3"],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ivan Kudinov",
+      "email": "frostealth@gmail.com"
+    },
+    {
+      "name": "Constantin Chuprik",
+      "email": "constantinchuprik@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "frostealth\\yii2\\components\\s3\\": "src/"
+    }
+  },
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=5.4.0",
+    "aws/aws-sdk-php": "2.7.*",
+    "yiisoft/yii2": "2.*"
+  }
+}

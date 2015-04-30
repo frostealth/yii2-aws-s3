@@ -1,0 +1,11 @@
+.DS_Store
+thumbs.db
+*.class
+*.pyc
+*.pyo
+*.swp
+.project
+.settings
+.idea
+composer.phar
+vendor/*
