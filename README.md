@@ -18,6 +18,7 @@ Component currently supports CloudFront (getting a CDN url for an object in S3 b
     'components' => [
         // ...
         's3bucket' => [
+            'class' => \frostealth\yii2\components\s3\Storage::className(),
             'key' => 'your aws s3 key',
             'secret' => 'your aws s3 secret',
             'bucket' => 'your aws s3 bucket',
