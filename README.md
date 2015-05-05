@@ -4,7 +4,7 @@ An Amazon S3Client wrapper as Yii2 component.
 
 Yii2 AWS S3 can only work with **one** bucket per a component configuration.
 
-Component currently supports CloudFront (getting a CDN url for an object in S3 bucket).
+The component currently supports CloudFront (getting a CDN url for an object in a S3 bucket).
 
 ## Installation
 1. The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
@@ -50,7 +50,7 @@ Yii::$app->get('s3bucket')->putFile('path/to/s3object.ext', '/path/to/local/file
 ```php
 /** @type \Guzzle\Service\Resource\Model $response */
 $result = Yii::$app->get('s3bucket')->get('path/to/s3object.ext');
-$data = (string) $result['Body']; // the 'Body' value of the result is an Guzzle\Http\EntityBody object
+$data = (string) $result['Body']; // the 'Body' value of the result is a Guzzle\Http\EntityBody object
 ```
 
 ### Saving objects to a file
