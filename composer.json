@@ -1,8 +1,9 @@
 {
   "name": "frostealth/yii2-aws-s3",
-  "description": "Yii2 AWS S3 component",
+  "description": "Yii2 AWS S3",
   "keywords": ["s3", "yii2", "aws-s3"],
-  "type": "library",
+  "homepage": "https://github.com/frostealth/yii2-aws-s3",
+  "type": "yii2-extension",
   "license": "MIT",
   "authors": [
     {

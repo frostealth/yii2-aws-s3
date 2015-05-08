@@ -29,7 +29,7 @@ class Storage extends Component implements StorageInterface
     private $client;
 
     /**
-     * @throws \Exception
+     * @throws InvalidConfigException
      */
     public function init()
     {
