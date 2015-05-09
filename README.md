@@ -9,9 +9,9 @@ The component currently supports CloudFront (getting a CDN url for an object in 
 ## Installation
 1. The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
-    Either run `php composer.phar require frostealth/yii2-aws-s3 "0.1.*"`
+    Either run `php composer.phar require frostealth/yii2-aws-s3 "0.2.*"`
 
-    or add `"frostealth/yii2-aws-s3": "0.1.*"` to the require section of your `composer.json` file.
+    or add `"frostealth/yii2-aws-s3": "0.2.*"` to the require section of your `composer.json` file.
 2. Add component to `config/main.php`
 
     ```php
@@ -23,6 +23,7 @@ The component currently supports CloudFront (getting a CDN url for an object in 
             'secret' => 'your aws s3 secret',
             'bucket' => 'your aws s3 bucket',
             'cdnHostname' => 'http://example.cloudfront.net',
+            'defaultAcl' => \frostealth\yii2\components\s3\Storage::ACL_PUBLIC_READ,
         ],
         // ...
     ],
@@ -43,7 +44,20 @@ Yii::$app->get('s3bucket')->put('path/to/s3object.ext', $resource);
 
 ### Uploading files
 ```php
-Yii::$app->get('s3bucket')->putFile('path/to/s3object.ext', '/path/to/local/file.ext');
+Yii::$app->get('s3bucket')->upload('path/to/s3object.ext', '/path/to/local/file.ext');
+```
+
+### Uploading large files using multipart uploads with custom options
+```php
+$concurrency = 5;
+$minPartSize = 536870912; // 512 MB
+
+Yii::$app->get('s3bucket')->multipartUpload(
+    'path/to/s3object.ext',
+    '/path/to/local/file.ext',
+    $concurrency,
+    $minPartSize
+);
 ```
 
 ### Reading objects
@@ -65,12 +79,17 @@ Yii::$app->get('s3bucket')->delete('path/to/s3object.ext');
 
 ### Getting a plain URL
 ```php
-Yii::$app->get('s3bucket')->getUrl('path/to/s3object.ext');
+$url = Yii::$app->get('s3bucket')->getUrl('path/to/s3object.ext');
+```
+
+### Creating a pre-signed URL
+```php
+$url = Yii::$app->get('s3bucket')->getUrl('path/to/s3object.ext', '+10 minutes');
 ```
 
 ### Getting a CDN URL
 ```php
-Yii::$app->get('s3bucket')->getCdnUrl('path/to/s3object.ext');
+$url = Yii::$app->get('s3bucket')->getCdnUrl('path/to/s3object.ext');
 ```
 
 ### Listing objects
