@@ -19,11 +19,15 @@ The component currently supports CloudFront (getting a CDN url for an object in 
         // ...
         's3bucket' => [
             'class' => \frostealth\yii2\components\s3\Storage::className(),
-            'key' => 'your aws s3 key',
-            'secret' => 'your aws s3 secret',
+            'region' => 'your region',
+            'credentials' => [ // Aws\Credentials\CredentialsInterface|array|callable
+                'key' => 'your aws s3 key',
+                'secret' => 'your aws s3 secret',
+            ],
             'bucket' => 'your aws s3 bucket',
             'cdnHostname' => 'http://example.cloudfront.net',
             'defaultAcl' => \frostealth\yii2\components\s3\Storage::ACL_PUBLIC_READ,
+            'debug' => true, // bool|array
         ],
         // ...
     ],
@@ -62,9 +66,9 @@ Yii::$app->get('s3bucket')->multipartUpload(
 
 ### Reading objects
 ```php
-/** @type \Guzzle\Service\Resource\Model $response */
+/** @var \Aws\Result $result */
 $result = Yii::$app->get('s3bucket')->get('path/to/s3object.ext');
-$data = (string) $result['Body']; // the 'Body' value of the result is a Guzzle\Http\EntityBody object
+$data = $result['Body'];
 ```
 
 ### Saving objects to a file
@@ -84,7 +88,7 @@ $url = Yii::$app->get('s3bucket')->getUrl('path/to/s3object.ext');
 
 ### Creating a pre-signed URL
 ```php
-$url = Yii::$app->get('s3bucket')->getUrl('path/to/s3object.ext', '+10 minutes');
+$url = Yii::$app->get('s3bucket')->getPresignedUrl('path/to/s3object.ext', '+10 minutes');
 ```
 
 ### Getting a CDN URL
@@ -94,8 +98,8 @@ $url = Yii::$app->get('s3bucket')->getCdnUrl('path/to/s3object.ext');
 
 ### Listing objects
 ```php
-$iterator = Yii::$app->get('s3bucket')->getList('path');
-foreach ($iterator as $object) {
-    echo $object['key'] . PHP_EOL;
+$result = Yii::$app->get('s3bucket')->getList('path');
+foreach ($result['Contents'] as $object) {
+    echo $object['Key'] . PHP_EOL;
 }
 ```

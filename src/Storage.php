@@ -2,10 +2,9 @@
 
 namespace frostealth\yii2\components\s3;
 
-use Aws\S3\Model\MultipartUpload\AbstractTransfer;
-use Aws\S3\Model\MultipartUpload\UploadBuilder;
+use Aws\S3\MultipartUploader;
 use Aws\S3\S3Client;
-use Guzzle\Http\EntityBody;
+use GuzzleHttp\Psr7;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
 
@@ -18,15 +17,18 @@ class Storage extends Component implements StorageInterface
 {
     const ACL_PRIVATE = 'private';
     const ACL_PUBLIC_READ = 'public-read';
+    const ACL_PUBLIC_READ_WRITE = 'public-read-write';
     const ACL_AUTHENTICATED_READ = 'authenticated-read';
+    const ACL_BUCKET_OWNER_READ = 'bucket-owner-read';
+    const ALC_BUCKET_OWNER_FULL_CONTROL = 'bucket-owner-full-control';
 
-    /** @var string */
-    public $key;
+    /** @type \Aws\Credentials\CredentialsInterface|array|callable */
+    public $credentials;
 
-    /** @var string */
-    public $secret;
+    /** @type string */
+    public $region;
 
-    /** @var string */
+    /** @type string */
     public $bucket;
 
     /** @type string */
@@ -35,7 +37,13 @@ class Storage extends Component implements StorageInterface
     /** @type string */
     public $defaultAcl;
 
-    /** @var S3Client */
+    /** @type bool|array */
+    public $debug;
+
+    /** @type array */
+    public $options = [];
+
+    /** @type S3Client */
     private $client;
 
     /**
@@ -43,18 +51,26 @@ class Storage extends Component implements StorageInterface
      */
     public function init()
     {
-        if ($this->key === null || $this->secret === null) {
+        if (empty($this->credentials)) {
             throw new InvalidConfigException('S3 credentials isn\'t set.');
         }
 
-        if ($this->bucket === null) {
+        if (empty($this->region)) {
+            throw new InvalidConfigException('Region isn\'t set.');
+        }
+
+        if (empty($this->bucket)) {
             throw new InvalidConfigException('You must set bucket name.');
         }
 
-        $this->client = S3Client::factory([
-            'key' => $this->key,
-            'secret' => $this->secret,
+        $args = $this->prepareArgs($this->options, [
+            'version' => '2006-03-01',
+            'region' => $this->region,
+            'credentials' => $this->credentials,
+            'debug' => $this->debug,
         ]);
+
+        $this->client = new S3Client($args);
     }
 
     /**
@@ -71,7 +87,7 @@ class Storage extends Component implements StorageInterface
      * @param string $acl
      * @param array $options
      *
-     * @return \Guzzle\Service\Resource\Model
+     * @return \Aws\ResultInterface
      */
     public function put($filename, $data, $acl = null, array $options = [])
     {
@@ -82,14 +98,14 @@ class Storage extends Component implements StorageInterface
             'ACL' => !empty($acl) ? $acl : $this->defaultAcl,
         ]);
 
-        return $this->getClient()->putObject($args);
+        return $this->execute('PutObject', $args);
     }
 
     /**
      * @param string $filename
      * @param string $saveAs
      *
-     * @return \Guzzle\Service\Resource\Model
+     * @return \Aws\ResultInterface
      */
     public function get($filename, $saveAs = null)
     {
@@ -99,17 +115,28 @@ class Storage extends Component implements StorageInterface
             'SaveAs' => $saveAs,
         ]);
 
-        return $this->getClient()->getObject($args);
+        return $this->execute('GetObject', $args);
+    }
+
+    /**
+     * @param string $filename
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function exist($filename, array $options = [])
+    {
+        return $this->getClient()->doesObjectExist($this->bucket, $filename, $options);
     }
 
     /**
      * @param string $filename
      *
-     * @return \Guzzle\Service\Resource\Model
+     * @return \Aws\ResultInterface
      */
     public function delete($filename)
     {
-        return $this->getClient()->deleteObject([
+        return $this->execute('DeleteObject', [
             'Bucket' => $this->bucket,
             'Key' => $filename,
         ]);
@@ -117,14 +144,26 @@ class Storage extends Component implements StorageInterface
 
     /**
      * @param string $filename
-     * @param string $expires
-     * @param array $options
      *
      * @return string
      */
-    public function getUrl($filename, $expires = null, array $options = [])
+    public function getUrl($filename)
     {
-        return $this->getClient()->getObjectUrl($this->bucket, $filename, $expires, $options);
+        return $this->getClient()->getObjectUrl($this->bucket, $filename);
+    }
+
+    /**
+     * @param string $filename
+     * @param string|int|\DateTime $expires
+     *
+     * @return string
+     */
+    public function getPresignedUrl($filename, $expires)
+    {
+        $command = $this->getClient()->getCommand('GetObject', ['Bucket' => $this->bucket, 'Key' => $filename]);
+        $request = $this->getClient()->createPresignedRequest($command, $expires);
+
+        return (string) $request->getUri();
     }
 
     /**
@@ -139,17 +178,18 @@ class Storage extends Component implements StorageInterface
 
     /**
      * @param string $prefix
+     * @param array $options
      *
-     * @return \Guzzle\Service\Resource\ResourceIteratorInterface
+     * @return \Aws\ResultInterface
      */
-    public function getList($prefix = null)
+    public function getList($prefix = null, array $options = [])
     {
-        $args = $this->prepareArgs([
+        $args = $this->prepareArgs($options, [
             'Bucket' => $this->bucket,
             'Prefix' => $prefix,
         ]);
 
-        return $this->getClient()->getIterator('ListObjects', $args);
+        return $this->execute('ListObjects', $args);
     }
 
     /**
@@ -158,55 +198,61 @@ class Storage extends Component implements StorageInterface
      * @param string $acl
      * @param array $options
      *
-     * @return \Guzzle\Service\Resource\Model
+     * @return \Aws\ResultInterface
      */
     public function upload($filename, $source, $acl = null, array $options = [])
     {
-        $body = EntityBody::factory($source);
-
-        if ($body->getSize() < AbstractTransfer::MIN_PART_SIZE) {
-            $result = $this->put($filename, $body, $acl, $options);
-        } else {
-            $concurrency = $body->getWrapper() == 'plainfile' ? 3 : 1;
-            $result = $this->multipartUpload($filename, $body, $concurrency, null, $acl, $options);
-        }
-
-        return $result;
+        return $this->getClient()->upload(
+            $this->bucket,
+            $filename,
+            $source,
+            !empty($acl) ? $acl : $this->defaultAcl,
+            $options
+        );
     }
 
     /**
      * @param string $filename
      * @param mixed $source
      * @param int $concurrency
-     * @param int $minPartSize
+     * @param int $partSize
      * @param string $acl
      * @param array $options
      *
-     * @return \Guzzle\Service\Resource\Model
+     * @return \Aws\ResultInterface
      */
     public function multipartUpload(
         $filename,
         $source,
-        $concurrency = 3,
-        $minPartSize = null,
+        $concurrency = null,
+        $partSize = null,
         $acl = null,
         array $options = []
     ) {
-        $builder = UploadBuilder::newInstance();
+        $args = $this->prepareArgs($options, [
+            'bucket' => $this->bucket,
+            'acl' => !empty($acl) ? $acl : $this->defaultAcl,
+            'key' => $filename,
+            'concurrency' => $concurrency,
+            'part-size' => $partSize,
+        ]);
 
-        $builder->setClient($this->getClient());
-        $builder->setBucket($this->bucket);
-        $builder->setKey($filename);
-        $builder->setSource($source);
-        $builder->setConcurrency($concurrency);
-        $builder->setMinPartSize($minPartSize);
-        $builder->addOptions($options);
+        $uploader = new MultipartUploader($this->getClient(), $source, $args);
 
-        if (!empty($acl) || !empty($this->defaultAcl)) {
-            $builder->setOption('ACL', !empty($acl) ? $acl : $this->defaultAcl);
-        }
+        return $uploader->upload();
+    }
 
-        return $builder->build()->upload();
+    /**
+     * @param string $name
+     * @param array $args
+     *
+     * @return \Aws\ResultInterface
+     */
+    protected function execute($name, array $args)
+    {
+        $command = $this->getClient()->getCommand($name, $args);
+
+        return $this->getClient()->execute($command);
     }
 
     /**

@@ -1,7 +1,11 @@
 {
   "name": "frostealth/yii2-aws-s3",
-  "description": "Yii2 AWS S3",
-  "keywords": ["s3", "yii2", "aws-s3"],
+  "description": "An Amazon S3Client wrapper as Yii2 component",
+  "keywords": [
+    "s3",
+    "yii2",
+    "aws-s3"
+  ],
   "homepage": "https://github.com/frostealth/yii2-aws-s3",
   "type": "yii2-extension",
   "license": "MIT",
@@ -12,10 +16,13 @@
       "homepage": "http://frostealth.ru"
     },
     {
-      "name": "Constantin Chuprik",
+      "name": "Constantine Chuprik",
       "email": "constantinchuprik@gmail.com"
     }
   ],
+  "support": {
+    "issues": "https://github.com/frostealth/yii2-aws-s3/issues?state=open"
+  },
   "autoload": {
     "psr-4": {
       "frostealth\\yii2\\components\\s3\\": "src/"
@@ -23,8 +30,10 @@
   },
   "minimum-stability": "stable",
   "require": {
-    "php": ">=5.4.0",
-    "aws/aws-sdk-php": "2.7.*",
+    "php": ">=5.5.0",
+    "aws/aws-sdk-php": "3.0.*"
+  },
+  "require-dev": {
     "yiisoft/yii2": "2.*"
   }
 }

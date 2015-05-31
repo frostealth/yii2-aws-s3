@@ -13,7 +13,7 @@ interface StorageInterface
      * @param string $filename
      * @param string $saveAs
      *
-     * @return \Guzzle\Service\Resource\Model
+     * @return \Aws\ResultInterface
      */
     public function get($filename, $saveAs = null);
 
@@ -23,25 +23,31 @@ interface StorageInterface
      * @param string $acl
      * @param array $options
      *
-     * @return \Guzzle\Service\Resource\Model
+     * @return \Aws\ResultInterface
      */
     public function put($filename, $data, $acl = null, array $options = []);
 
     /**
      * @param string $filename
      *
-     * @return \Guzzle\Service\Resource\Model
+     * @return \Aws\ResultInterface
      */
     public function delete($filename);
 
     /**
      * @param string $filename
-     * @param string $expires
-     * @param array $options
      *
      * @return string
      */
-    public function getUrl($filename, $expires = null, array $options = []);
+    public function getUrl($filename);
+
+    /**
+     * @param string $filename
+     * @param string|int|\DateTime $expires
+     *
+     * @return string
+     */
+    public function getPresignedUrl($filename, $expires);
 
     /**
      * @param string $filename
@@ -52,10 +58,11 @@ interface StorageInterface
 
     /**
      * @param string $prefix
+     * @param array $options
      *
-     * @return \Guzzle\Service\Resource\ResourceIteratorInterface
+     * @return \Aws\ResultInterface
      */
-    public function getList($prefix);
+    public function getList($prefix = null, array $options = []);
 
     /**
      * @param string $filename
@@ -63,7 +70,7 @@ interface StorageInterface
      * @param string $acl
      * @param array $options
      *
-     * @return \Guzzle\Service\Resource\Model
+     * @return \Aws\ResultInterface
      */
     public function upload($filename, $source, $acl = null, array $options = []);
 
@@ -71,17 +78,17 @@ interface StorageInterface
      * @param string $filename
      * @param mixed $source
      * @param int $concurrency
-     * @param int $minPartSize
+     * @param int $partSize
      * @param string $acl
      * @param array $options
      *
-     * @return \Guzzle\Service\Resource\Model
+     * @return \Aws\ResultInterface
      */
     public function multipartUpload(
         $filename,
         $source,
-        $concurrency = 3,
-        $minPartSize = null,
+        $concurrency = null,
+        $partSize = null,
         $acl = null,
         array $options = []
     );
