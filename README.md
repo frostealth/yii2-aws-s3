@@ -9,9 +9,9 @@ The component currently supports CloudFront (getting a CDN url for an object in 
 ## Installation
 1. The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
-    Either run `php composer.phar require frostealth/yii2-aws-s3 "0.2.*"`
+    Either run `php composer.phar require frostealth/yii2-aws-s3 "0.3.*"`
 
-    or add `"frostealth/yii2-aws-s3": "0.2.*"` to the require section of your `composer.json` file.
+    or add `"frostealth/yii2-aws-s3": "0.3.*"` to the require section of your `composer.json` file.
 2. Add component to `config/main.php`
 
     ```php
