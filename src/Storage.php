@@ -4,7 +4,6 @@ namespace frostealth\yii2\components\s3;
 
 use Aws\S3\MultipartUploader;
 use Aws\S3\S3Client;
-use GuzzleHttp\Psr7;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
 
@@ -22,28 +21,44 @@ class Storage extends Component implements StorageInterface
     const ACL_BUCKET_OWNER_READ = 'bucket-owner-read';
     const ALC_BUCKET_OWNER_FULL_CONTROL = 'bucket-owner-full-control';
 
-    /** @type \Aws\Credentials\CredentialsInterface|array|callable */
+    /**
+     * @var \Aws\Credentials\CredentialsInterface|array|callable
+     */
     public $credentials;
 
-    /** @type string */
+    /**
+     * @var string
+     */
     public $region;
 
-    /** @type string */
+    /**
+     * @var string
+     */
     public $bucket;
 
-    /** @type string */
+    /**
+     * @var string
+     */
     public $cdnHostname;
 
-    /** @type string */
+    /**
+     * @var string
+     */
     public $defaultAcl;
 
-    /** @type bool|array */
+    /**
+     * @var bool|array
+     */
     public $debug;
 
-    /** @type array */
+    /**
+     * @var array
+     */
     public $options = [];
 
-    /** @type S3Client */
+    /**
+     * @var S3Client
+     */
     private $client;
 
     /**
