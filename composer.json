@@ -28,6 +28,7 @@
     "require": {
         "php": ">=5.5.0",
         "aws/aws-sdk-php": "3.0.*",
-        "yiisoft/yii2": "2.*"
+        "yiisoft/yii2": "2.*",
+        "frostealth/yii2-aws-s3": "0.3.*"
     }
 }

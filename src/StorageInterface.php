@@ -1,11 +1,11 @@
 <?php
 
-namespace frostealth\yii2\components\s3;
+namespace frostealth\yii2\aws\s3;
 
 /**
  * Interface StorageInterface
  *
- * @package frostealth\yii2\components\s3
+ * @package frostealth\yii2\aws\s3
  */
 interface StorageInterface
 {

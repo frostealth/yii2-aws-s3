@@ -7,18 +7,18 @@ Yii2 AWS S3 can only work with **one** bucket per a component configuration.
 The component currently supports CloudFront (getting a CDN url for an object in a S3 bucket).
 
 ## Installation
-1. The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
+1. Run the [Composer](http://getcomposer.org/download/) command to install the latest stable version:
+    ```
+    composer require frostealth/yii2-aws-s3
+    ```
 
-    Either run `php composer.phar require frostealth/yii2-aws-s3 "0.3.*"`
-
-    or add `"frostealth/yii2-aws-s3": "0.3.*"` to the require section of your `composer.json` file.
 2. Add component to `config/main.php`
 
     ```php
     'components' => [
         // ...
         's3bucket' => [
-            'class' => \frostealth\yii2\components\s3\Storage::className(),
+            'class' => \frostealth\yii2\aws\s3\Storage::className(),
             'region' => 'your region',
             'credentials' => [ // Aws\Credentials\CredentialsInterface|array|callable
                 'key' => 'your aws s3 key',
@@ -26,7 +26,7 @@ The component currently supports CloudFront (getting a CDN url for an object in 
             ],
             'bucket' => 'your aws s3 bucket',
             'cdnHostname' => 'http://example.cloudfront.net',
-            'defaultAcl' => \frostealth\yii2\components\s3\Storage::ACL_PUBLIC_READ,
+            'defaultAcl' => \frostealth\yii2\aws\s3\Storage::ACL_PUBLIC_READ,
             'debug' => true, // bool|array
         ],
         // ...
@@ -98,7 +98,7 @@ $url = Yii::$app->get('s3bucket')->getCdnUrl('path/to/s3object.ext');
 
 ### Listing objects
 ```php
-$result = Yii::$app->get('s3bucket')->getList('path');
+$result = Yii::$app->get('s3bucket')->getList('path/');
 foreach ($result['Contents'] as $object) {
     echo $object['Key'] . PHP_EOL;
 }

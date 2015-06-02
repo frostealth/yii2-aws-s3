@@ -1,6 +1,6 @@
 <?php
 
-namespace frostealth\yii2\components\s3;
+namespace frostealth\yii2\aws\s3;
 
 use Aws\S3\MultipartUploader;
 use Aws\S3\S3Client;
@@ -10,7 +10,7 @@ use yii\base\InvalidConfigException;
 /**
  * Class Storage
  *
- * @package frostealth\yii2\components\s3
+ * @package frostealth\yii2\aws\s3
  */
 class Storage extends Component implements StorageInterface
 {
