@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "frostealth\\yii2\\components\\s3\\": "src/"
+            "frostealth\\yii2\\aws\\s3\\": "src/"
         }
     },
     "minimum-stability": "stable",
