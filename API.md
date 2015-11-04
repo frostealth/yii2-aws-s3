@@ -4,6 +4,7 @@ API
 ##Class frostealth\yii2\aws\s3\Storage
 
 **Implements**: [frostealth\yii2\aws\s3\StorageInterface](https://github.com/frostealth/yii2-aws-s3/blob/master/src/StorageInterface.php)
+
 **Inheritance**: [yii\base\Component](https://github.com/yiisoft/yii2/blob/master/framework/base/Component.php)
 
 ### Public properties
@@ -102,6 +103,7 @@ _return_ | [Aws\ResultInterface](http://docs.aws.amazon.com/aws-sdk-php/v3/api/c
 
 #### upload($filename, $source, $acl = null, array $options = [])
 Upload a file, stream, or string to a bucket.
+
 If the upload size exceeds the specified threshold, the upload will be performed using concurrent multipart uploads.
 
 Argument | Type | Description
