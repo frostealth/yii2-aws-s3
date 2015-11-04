@@ -97,12 +97,7 @@ class Storage extends Component implements StorageInterface
     }
 
     /**
-     * @param string $filename
-     * @param mixed $data
-     * @param string $acl
-     * @param array $options
-     *
-     * @return \Aws\ResultInterface
+     * @inheritDoc
      */
     public function put($filename, $data, $acl = null, array $options = [])
     {
@@ -117,10 +112,7 @@ class Storage extends Component implements StorageInterface
     }
 
     /**
-     * @param string $filename
-     * @param string $saveAs
-     *
-     * @return \Aws\ResultInterface
+     * @inheritDoc
      */
     public function get($filename, $saveAs = null)
     {
@@ -134,10 +126,7 @@ class Storage extends Component implements StorageInterface
     }
 
     /**
-     * @param string $filename
-     * @param array $options
-     *
-     * @return bool
+     * @inheritDoc
      */
     public function exist($filename, array $options = [])
     {
@@ -145,9 +134,7 @@ class Storage extends Component implements StorageInterface
     }
 
     /**
-     * @param string $filename
-     *
-     * @return \Aws\ResultInterface
+     * @inheritDoc
      */
     public function delete($filename)
     {
@@ -158,9 +145,7 @@ class Storage extends Component implements StorageInterface
     }
 
     /**
-     * @param string $filename
-     *
-     * @return string
+     * @inheritDoc
      */
     public function getUrl($filename)
     {
@@ -168,10 +153,7 @@ class Storage extends Component implements StorageInterface
     }
 
     /**
-     * @param string $filename
-     * @param string|int|\DateTime $expires
-     *
-     * @return string
+     * @inheritDoc
      */
     public function getPresignedUrl($filename, $expires)
     {
@@ -182,9 +164,7 @@ class Storage extends Component implements StorageInterface
     }
 
     /**
-     * @param string $filename
-     *
-     * @return string
+     * @inheritDoc
      */
     public function getCdnUrl($filename)
     {
@@ -192,10 +172,7 @@ class Storage extends Component implements StorageInterface
     }
 
     /**
-     * @param string $prefix
-     * @param array $options
-     *
-     * @return \Aws\ResultInterface
+     * @inheritDoc
      */
     public function getList($prefix = null, array $options = [])
     {
@@ -208,12 +185,7 @@ class Storage extends Component implements StorageInterface
     }
 
     /**
-     * @param string $filename
-     * @param mixed $source
-     * @param string $acl
-     * @param array $options
-     *
-     * @return \Aws\ResultInterface
+     * @inheritDoc
      */
     public function upload($filename, $source, $acl = null, array $options = [])
     {
@@ -227,14 +199,7 @@ class Storage extends Component implements StorageInterface
     }
 
     /**
-     * @param string $filename
-     * @param mixed $source
-     * @param int $concurrency
-     * @param int $partSize
-     * @param string $acl
-     * @param array $options
-     *
-     * @return \Aws\ResultInterface
+     * @inheritDoc
      */
     public function multipartUpload(
         $filename,
@@ -259,7 +224,7 @@ class Storage extends Component implements StorageInterface
 
     /**
      * @param string $name
-     * @param array $args
+     * @param array  $args
      *
      * @return \Aws\ResultInterface
      */
