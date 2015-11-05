@@ -6,10 +6,10 @@ Yii2 AWS S3 can only work with **one** bucket per a component configuration.
 
 The component currently supports CloudFront (getting a CDN url for an object in a S3 bucket).
 
+[![License](https://poser.pugx.org/frostealth/yii2-aws-s3/license)](https://github.com/frostealth/yii2-aws-s3/blob/master/LICENSE.md)
 [![Latest Stable Version](https://poser.pugx.org/frostealth/yii2-aws-s3/v/stable)](https://packagist.org/packages/frostealth/yii2-aws-s3)
 [![Total Downloads](https://poser.pugx.org/frostealth/yii2-aws-s3/downloads)](https://packagist.org/packages/frostealth/yii2-aws-s3)
 [![Latest Unstable Version](https://poser.pugx.org/frostealth/yii2-aws-s3/v/unstable)](https://packagist.org/packages/frostealth/yii2-aws-s3)
-[![License](https://poser.pugx.org/frostealth/yii2-aws-s3/license)](https://packagist.org/packages/frostealth/yii2-aws-s3)
 
 ## Installation
 1. Run the [Composer](http://getcomposer.org/download/) command to install the latest stable version:
