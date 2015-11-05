@@ -1,7 +1,7 @@
 API
 ===
 
-##Class frostealth\yii2\aws\s3\Storage
+## Class frostealth\yii2\aws\s3\Storage
 
 **Implements**: [frostealth\yii2\aws\s3\StorageInterface](https://github.com/frostealth/yii2-aws-s3/blob/master/src/StorageInterface.php)
 
@@ -10,7 +10,7 @@ API
 ### Public properties
 Property | Type | Required | Description
 -------- | ---- | -------- | -----------
-$credentails | [Aws\Credentials\CredentialsInterface]()\|[array](http://php.net/language.types.array)\|[callable](http://php.net/language.types.callback) | yes | Specifies the credentials used to sign requests.
+$credentials | [Aws\Credentials\CredentialsInterface]()\|[array](http://php.net/language.types.array)\|[callable](http://php.net/language.types.callback) | yes | Specifies the credentials used to sign requests.
 $region | [string](http://php.net/language.types.string) | yes | Region to connect to. [Available regions](http://docs.aws.amazon.com/general/latest/gr/rande.html).
 $bucket | [string](http://php.net/language.types.string) | yes | The bucket name.
 $debug | [boolean](http://php.net/language.types.boolean)\|[array](http://www.php.net/language.types.array) | no | Set to true to display debug information when sending requests.
@@ -114,7 +114,7 @@ $acl | [string](http://php.net/language.types.string) | ACL to apply to the obje
 $options | [array](http://php.net/language.types.array) | Options used to configure the upload process. See [more](http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.S3.S3Client.html#_upload).
 _return_ | [Aws\ResultInterface](http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.ResultInterface.html) | Returns the result of the upload.
 
-#### multipartUpload($filename, $source, $concurrency = null, $partSize = null, $acl = null, array $options = [])
+#### uploadAsync($filename, $source, $concurrency = null, $partSize = null, $acl = null, array $options = [])
 Upload a file, stream, or string to a bucket asynchronously.
 
 Argument | Type | Description
@@ -122,13 +122,13 @@ Argument | Type | Description
 $filename | [string](http://php.net/language.types.string)
 $source | mixed | Object data to upload. Can be a StreamInterface, PHP stream resource, or a string of data to upload.
 $concurrency | [integer](http://php.net/language.types.integer) | Maximum number of concurrent UploadPart operations allowed during the multipart upload. Default 5.
-$partSize | [integer](http://php.net/language.types.integer) | Part size, in bytes, to use when doing a multipart upload. This must between 5 MB and 5 GB, inclusive. Default 5242880.
+$partSize | [integer](http://php.net/language.types.integer) | Part size, in bytes, to use when doing a multipart upload. This must between 5 MB and 5 GB, inclusive. Default 5242880 (512 MB).
 $acl | [string](http://php.net/language.types.string) | ACL to apply to the object.
 $options | [array](http://php.net/language.types.array) | Options used to configure the upload process. See [more](http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.S3.MultipartUploader.html).
-_return_ | [Aws\ResultInterface](http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.ResultInterface.html) | The result of the CompleteMultipartUpload operation.
+_return_ | [GuzzleHttp\Promise\PromiseInterface](https://docs.aws.amazon.com/aws-sdk-php/v3/api/class-GuzzleHttp.Promise.PromiseInterface.html) | Returns a [promise](http://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/promises.html) that will be fulfilled with the result of the upload.
 
 #### getClient()
-Returns the S3Client object.
+Returns the `S3Client` object.
 
 Argument | Type | Description
 -------- | ---- | -----------

@@ -6,6 +6,11 @@ Yii2 AWS S3 can only work with **one** bucket per a component configuration.
 
 The component currently supports CloudFront (getting a CDN url for an object in a S3 bucket).
 
+[![Latest Stable Version](https://poser.pugx.org/frostealth/yii2-aws-s3/v/stable)](https://packagist.org/packages/frostealth/yii2-aws-s3)
+[![Total Downloads](https://poser.pugx.org/frostealth/yii2-aws-s3/downloads)](https://packagist.org/packages/frostealth/yii2-aws-s3)
+[![Latest Unstable Version](https://poser.pugx.org/frostealth/yii2-aws-s3/v/unstable)](https://packagist.org/packages/frostealth/yii2-aws-s3)
+[![License](https://poser.pugx.org/frostealth/yii2-aws-s3/license)](https://packagist.org/packages/frostealth/yii2-aws-s3)
+
 ## Installation
 1. Run the [Composer](http://getcomposer.org/download/) command to install the latest stable version:
     ```
@@ -33,6 +38,13 @@ The component currently supports CloudFront (getting a CDN url for an object in 
     ],
     ```
 
+You can also use it with the dependency container:
+```php
+Yii::$app->container->set('frostealth\yii2\aws\s3\StorageInterface', function () {
+    return Yii::$app->get('s3bucket');
+});
+```
+
 ## Usage
 
 ### Uploading objects
@@ -51,17 +63,20 @@ Yii::$app->get('s3bucket')->put('path/to/s3object.ext', $resource);
 Yii::$app->get('s3bucket')->upload('path/to/s3object.ext', '/path/to/local/file.ext');
 ```
 
-### Uploading large files using multipart uploads with custom options
+### Uploading large files using asynchronous multipart uploads with custom options
 ```php
 $concurrency = 5;
 $minPartSize = 536870912; // 512 MB
 
-Yii::$app->get('s3bucket')->multipartUpload(
+$promise = Yii::$app->get('s3bucket')->uploadAsync(
     'path/to/s3object.ext',
     '/path/to/local/file.ext',
     $concurrency,
     $minPartSize
 );
+
+// block until the result is ready
+$promise->wait();
 ```
 
 ### Reading objects

@@ -2,7 +2,6 @@
 
 namespace frostealth\yii2\aws\s3;
 
-use Aws\S3\MultipartUploader;
 use Aws\S3\S3Client;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
@@ -160,7 +159,7 @@ class Storage extends Component implements StorageInterface
         $command = $this->getClient()->getCommand('GetObject', ['Bucket' => $this->bucket, 'Key' => $filename]);
         $request = $this->getClient()->createPresignedRequest($command, $expires);
 
-        return (string) $request->getUri();
+        return (string)$request->getUri();
     }
 
     /**
@@ -168,7 +167,7 @@ class Storage extends Component implements StorageInterface
      */
     public function getCdnUrl($filename)
     {
-        return $this->cdnHostname . '/' . $filename;
+        return ltrim($this->cdnHostname, '/') . '/' . $filename;
     }
 
     /**
@@ -199,7 +198,16 @@ class Storage extends Component implements StorageInterface
     }
 
     /**
-     * @inheritDoc
+     * @deprecated  use self::uploadAsync()->wait()
+     *
+     * @param string $filename
+     * @param mixed  $source
+     * @param int    $concurrency
+     * @param int    $partSize
+     * @param string $acl
+     * @param array  $options
+     *
+     * @return \Aws\ResultInterface
      */
     public function multipartUpload(
         $filename,
@@ -209,17 +217,32 @@ class Storage extends Component implements StorageInterface
         $acl = null,
         array $options = []
     ) {
+        return $this->uploadAsync($filename, $source, $concurrency, $partSize, $acl, $options)->wait();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function uploadAsync(
+        $filename,
+        $source,
+        $concurrency = null,
+        $partSize = null,
+        $acl = null,
+        array $options = []
+    ) {
         $args = $this->prepareArgs($options, [
-            'bucket' => $this->bucket,
-            'acl' => !empty($acl) ? $acl : $this->defaultAcl,
-            'key' => $filename,
             'concurrency' => $concurrency,
-            'part-size' => $partSize,
+            'part_size' => $partSize,
         ]);
 
-        $uploader = new MultipartUploader($this->getClient(), $source, $args);
-
-        return $uploader->upload();
+        return $this->getClient()->uploadAsync(
+            $this->bucket,
+            $filename,
+            $source,
+            !empty($acl) ? $acl : $this->defaultAcl,
+            $args
+        );
     }
 
     /**
