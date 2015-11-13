@@ -13,8 +13,9 @@ The component currently supports CloudFront (getting a CDN url for an object in 
 
 ## Installation
 1. Run the [Composer](http://getcomposer.org/download/) command to install the latest stable version:
+
     ```
-    composer require frostealth/yii2-aws-s3
+    composer require frostealth/yii2-aws-s3 @stable
     ```
 
 2. Add component to `config/main.php`
@@ -38,16 +39,12 @@ The component currently supports CloudFront (getting a CDN url for an object in 
     ],
     ```
 
-You can also use it with the dependency container:
-```php
-Yii::$app->container->set('frostealth\yii2\aws\s3\StorageInterface', function () {
-    return Yii::$app->get('s3bucket');
-});
-```
-
 ## Usage
 
+See [API.md](https://github.com/frostealth/yii2-aws-s3/blob/master/API.md) for detailed information.
+
 ### Uploading objects
+
 ```php
 // creating an object
 $data = ['one', 'two', 'three'];
@@ -59,11 +56,13 @@ Yii::$app->get('s3bucket')->put('path/to/s3object.ext', $resource);
 ```
 
 ### Uploading files
+
 ```php
 Yii::$app->get('s3bucket')->upload('path/to/s3object.ext', '/path/to/local/file.ext');
 ```
 
 ### Uploading large files using asynchronous multipart uploads with custom options
+
 ```php
 $concurrency = 5;
 $minPartSize = 536870912; // 512 MB
@@ -80,6 +79,7 @@ $promise->wait();
 ```
 
 ### Reading objects
+
 ```php
 /** @var \Aws\Result $result */
 $result = Yii::$app->get('s3bucket')->get('path/to/s3object.ext');
@@ -87,34 +87,55 @@ $data = $result['Body'];
 ```
 
 ### Saving objects to a file
+
 ```php
 Yii::$app->get('s3bucket')->get('path/to/s3object.ext', '/path/to/local/file.ext');
 ```
 
 ### Deleting objects
+
 ```php
 Yii::$app->get('s3bucket')->delete('path/to/s3object.ext');
 ```
 
 ### Getting a plain URL
+
 ```php
 $url = Yii::$app->get('s3bucket')->getUrl('path/to/s3object.ext');
 ```
 
 ### Creating a pre-signed URL
+
 ```php
 $url = Yii::$app->get('s3bucket')->getPresignedUrl('path/to/s3object.ext', '+10 minutes');
 ```
 
 ### Getting a CDN URL
+
 ```php
 $url = Yii::$app->get('s3bucket')->getCdnUrl('path/to/s3object.ext');
 ```
 
 ### Listing objects
+
 ```php
 $result = Yii::$app->get('s3bucket')->getList('path/');
 foreach ($result['Contents'] as $object) {
     echo $object['Key'] . PHP_EOL;
 }
 ```
+
+## Dependency Injection
+
+You can also use it with the dependency container:
+
+```php
+Yii::$app->container->set('frostealth\yii2\aws\s3\StorageInterface', function () {
+    return Yii::$app->get('s3bucket');
+});
+```
+
+## License
+
+The MIT License (MIT).
+See [LICENSE.md](https://github.com/frostealth/yii2-aws-s3/blob/master/LICENSE.md) for more information.
