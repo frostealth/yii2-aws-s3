@@ -102,25 +102,25 @@ $options | [array](http://php.net/language.types.string) | [Other parameters](ht
 _return_ | [Aws\ResultInterface](http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.ResultInterface.html) | See [result syntax](http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-s3-2006-03-01.html#listobjects).
 
 #### upload($filename, $source, $acl = null, array $options = [])
-Upload a file, stream, or string to a bucket.
+Upload a file or stream to a bucket.
 
 If the upload size exceeds the specified threshold, the upload will be performed using concurrent multipart uploads.
 
 Argument | Type | Description
 -------- | ---- | -----------
 $filename | [string](http://php.net/language.types.string)
-$source | mixed | Object data to upload. Can be a [Psr\Http\Message\StreamInterface](https://github.com/php-fig/http-message/blob/master/src/StreamInterface.php), php stream resource, or a string of data to upload.
+$source | mixed | File to upload. Can be a [Psr\Http\Message\StreamInterface](https://github.com/php-fig/http-message/blob/master/src/StreamInterface.php), php stream resource, or a path to a local file to upload.
 $acl | [string](http://php.net/language.types.string) | ACL to apply to the object.
 $options | [array](http://php.net/language.types.array) | Options used to configure the upload process. [See more](http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.S3.S3Client.html#_upload).
 _return_ | [Aws\ResultInterface](http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.ResultInterface.html) | Returns the result of the upload.
 
 #### uploadAsync($filename, $source, $concurrency = null, $partSize = null, $acl = null, array $options = [])
-Upload a file, stream, or string to a bucket asynchronously.
+Upload a file or stream to a bucket asynchronously.
 
 Argument | Type | Description
 -------- | ---- | -----------
 $filename | [string](http://php.net/language.types.string)
-$source | mixed | Object data to upload. Can be a [Psr\Http\Message\StreamInterface](https://github.com/php-fig/http-message/blob/master/src/StreamInterface.php), php stream resource, or a string of data to upload.
+$source | mixed | File to upload. Can be a [Psr\Http\Message\StreamInterface](https://github.com/php-fig/http-message/blob/master/src/StreamInterface.php), php stream resource, or a path to a local file to upload.
 $concurrency | [integer](http://php.net/language.types.integer) | Maximum number of concurrent UploadPart operations allowed during the multipart upload. Default 5.
 $partSize | [integer](http://php.net/language.types.integer) | Part size, in bytes, to use when doing a multipart upload. This must between 5 MB and 5 GB, inclusive. Default 5242880 (512 MB).
 $acl | [string](http://php.net/language.types.string) | ACL to apply to the object.

@@ -3,6 +3,8 @@
 namespace frostealth\yii2\aws\s3;
 
 use Aws\S3\S3Client;
+use GuzzleHttp\Psr7;
+use Psr\Http\Message\StreamInterface;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
 
@@ -191,14 +193,15 @@ class Storage extends Component implements StorageInterface
         return $this->getClient()->upload(
             $this->bucket,
             $filename,
-            $source,
+            $this->toStream($source),
             !empty($acl) ? $acl : $this->defaultAcl,
             $options
         );
     }
 
     /**
-     * @deprecated  use self::uploadAsync()->wait()
+     * @deprecated
+     * @see self::uploadAsync()
      *
      * @param string $filename
      * @param mixed  $source
@@ -239,7 +242,7 @@ class Storage extends Component implements StorageInterface
         return $this->getClient()->uploadAsync(
             $this->bucket,
             $filename,
-            $source,
+            $this->toStream($source),
             !empty($acl) ? $acl : $this->defaultAcl,
             $args
         );
@@ -274,5 +277,21 @@ class Storage extends Component implements StorageInterface
         }
 
         return $result;
+    }
+
+    /**
+     * Create a new stream based on the input type.
+     *
+     * @param resource|string|StreamInterface $source path to a local file, resource or stream
+     *
+     * @return StreamInterface
+     */
+    protected function toStream($source)
+    {
+        if (is_string($source)) {
+            $source = Psr7\try_fopen($source, 'r+');
+        }
+
+        return Psr7\stream_for($source);
     }
 }
