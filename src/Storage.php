@@ -79,6 +79,10 @@ class Storage extends Component implements StorageInterface
             throw new InvalidConfigException('You must set bucket name.');
         }
 
+        if (!empty($this->cdnHostname)) {
+            $this->cdnHostname = rtrim($this->cdnHostname, '/');
+        }
+
         $args = $this->prepareArgs($this->options, [
             'version' => '2006-03-01',
             'region' => $this->region,
@@ -169,7 +173,7 @@ class Storage extends Component implements StorageInterface
      */
     public function getCdnUrl($filename)
     {
-        return ltrim($this->cdnHostname, '/') . '/' . $filename;
+        return $this->cdnHostname . '/' . $filename;
     }
 
     /**
@@ -197,30 +201,6 @@ class Storage extends Component implements StorageInterface
             !empty($acl) ? $acl : $this->defaultAcl,
             $options
         );
-    }
-
-    /**
-     * @deprecated
-     * @see self::uploadAsync()
-     *
-     * @param string $filename
-     * @param mixed  $source
-     * @param int    $concurrency
-     * @param int    $partSize
-     * @param string $acl
-     * @param array  $options
-     *
-     * @return \Aws\ResultInterface
-     */
-    public function multipartUpload(
-        $filename,
-        $source,
-        $concurrency = null,
-        $partSize = null,
-        $acl = null,
-        array $options = []
-    ) {
-        return $this->uploadAsync($filename, $source, $concurrency, $partSize, $acl, $options)->wait();
     }
 
     /**
