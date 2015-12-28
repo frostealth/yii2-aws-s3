@@ -18,6 +18,13 @@ interface StorageInterface
 
     /**
      * @param string $filename
+     *
+     * @return \Aws\ResultInterface
+     */
+    public function deleteObjects($objects, $quiet = true);
+    
+    /**
+     * @param string $filename
      * @param array  $options
      *
      * @return bool

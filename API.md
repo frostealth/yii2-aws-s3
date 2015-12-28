@@ -67,6 +67,16 @@ Argument | Type | Description
 $filename | [string](http://php.net/language.types.string)
 _return_ | [Aws\ResultInterface](http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.ResultInterface.html) | See [result syntax](http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-s3-2006-03-01.html#deleteobject).
 
+#### deleteObjects($objects, $quet)
+Removes objects from Amazon S3.
+
+Argument | Type | Description
+-------- | ---- | -----------
+$objects | [array] | array( array('Key' => key) )
+$quet    | [bool]  | enable quiet mode for the request
+_return_ | [Aws\ResultInterface](http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.ResultInterface.html) | See [result syntax](http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-s3-2006-03-01.html#deleteobject).
+
+
 #### getUrl($filename)
 Returns the URL to an object identified by its bucket and key.
 
