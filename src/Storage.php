@@ -141,6 +141,33 @@ class Storage extends Component implements StorageInterface
     /**
      * @inheritDoc
      */
+    public function deleteObjects($objects, $quiet = true)
+    {
+        if ($quiet) {
+            
+            return $this->execute('DeleteObjects', [
+                'Bucket' => $this->bucket,
+                'Delete' => [
+                    'Objects' => $objects,
+                    'Quiet' => $quiet //Element to enable quiet mode for the request. When you add this element, you must set its value to true.
+                ]
+            ]);
+        }
+        else {
+            
+            return $this->execute('DeleteObjects', [
+                'Bucket' => $this->bucket,
+                'Delete' => [
+                    'Objects' => $objects
+                ]
+            ]);
+        }
+        
+    }
+    
+    /**
+     * @inheritDoc
+     */
     public function delete($filename)
     {
         return $this->execute('DeleteObject', [
