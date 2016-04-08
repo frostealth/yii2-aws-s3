@@ -1,0 +1,36 @@
+{
+    "name": "frostealth/yii2-aws-s3",
+    "type": "yii2-extension",
+    "description": "An Amazon S3 component for Yii2",
+    "keywords": ["yii2", "aws", "s3", "aws-s3", "yii2-aws", "yii2-s3"],
+    "homepage": "https://github.com/frostealth/yii2-aws-s3",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ivan Kudinov",
+            "email": "i.kudinov@frostealth.ru",
+            "homepage": "http://frostealth.ru"
+        },
+        {
+            "name": "Constantine Chuprik",
+            "email": "constantinchuprik@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/frostealth/yii2-aws-s3/issues?state=open"
+    },
+    "require": {
+        "php": ">=7.0.0",
+        "aws/aws-sdk-php": "~3.17",
+        "yiisoft/yii2": "~2.0"
+    },
+    "require-dev": {
+        "phpro/grumphp": "~0.8",
+        "squizlabs/php_codesniffer": "~2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "frostealth\\yii2\\aws\\s3\\": "src/"
+        }
+    }
+}
