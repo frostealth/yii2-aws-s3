@@ -1,6 +1,6 @@
 <?php
 
-namespace frostealth\yii2\aws\s3\base;
+namespace frostealth\yii2\aws\s3;
 
 use Aws\S3\S3Client;
 use frostealth\yii2\aws\s3\handlers\PlainCommandHandler;
@@ -11,12 +11,15 @@ use yii\base\Object;
 /**
  * Class HandlerResolver
  *
- * @package frostealth\yii2\aws\s3\base
+ * @package frostealth\yii2\aws\s3
  */
 class HandlerResolver extends Object implements interfaces\HandlerResolver
 {
     /** @var array */
     protected $handlers = [];
+
+    /** @var string */
+    protected $plainCommandHandlerClassName = PlainCommandHandler::class;
 
     /** @var \Aws\S3\S3Client */
     protected $s3Client;
@@ -50,7 +53,7 @@ class HandlerResolver extends Object implements interfaces\HandlerResolver
         }
 
         if ($command instanceof interfaces\commands\PlainCommand) {
-            return $this->createHandler(PlainCommandHandler::class);
+            return $this->createHandler($this->plainCommandHandlerClassName);
         }
 
         $handlerClass = $commandClass . 'Handler';
@@ -83,6 +86,14 @@ class HandlerResolver extends Object implements interfaces\HandlerResolver
         foreach ($handlers as $commandClass => $handler) {
             $this->bindHandler($commandClass, $handler);
         }
+    }
+
+    /**
+     * @param string $className
+     */
+    public function setPlainCommandHandler(string $className)
+    {
+        $this->plainCommandHandlerClassName = $className;
     }
 
     /**

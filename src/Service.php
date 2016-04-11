@@ -3,7 +3,6 @@
 namespace frostealth\yii2\aws\s3;
 
 use Aws\ResultInterface;
-use frostealth\yii2\aws\s3\base\CommandFactory;
 use frostealth\yii2\aws\s3\interfaces\commands\Command;
 use frostealth\yii2\aws\s3\interfaces\HandlerResolver;
 use frostealth\yii2\aws\s3\interfaces\Service as ServiceInterface;
@@ -49,15 +48,6 @@ class Service extends Component implements ServiceInterface
     /** @var array */
     private $components = [];
 
-    /** @var array */
-    private $definitions = [
-        'client' => ['class' => 'Aws\S3\S3Client'],
-        'resolver' => ['class' => 'frostealth\yii2\aws\s3\base\HandlerResolver'],
-        'bus' => ['class' => 'frostealth\yii2\aws\s3\base\Bus'],
-        'builder' => ['class' => 'frostealth\yii2\aws\s3\base\CommandBuilder'],
-        'factory' => ['class' => 'frostealth\yii2\aws\s3\base\CommandFactory'],
-    ];
-
     /**
      * Initializes the object.
      * This method is invoked at the end of the constructor after the object is initialized with the
@@ -66,7 +56,7 @@ class Service extends Component implements ServiceInterface
     public function init()
     {
         if (empty($this->clientConfig['credentials'])) {
-            throw new InvalidConfigException('Credentials is not set.');
+            throw new InvalidConfigException('Credentials are not set.');
         }
 
         if (empty($this->clientConfig['region'])) {
@@ -77,7 +67,7 @@ class Service extends Component implements ServiceInterface
             throw new InvalidConfigException('Default bucket name is not set.');
         }
 
-        foreach ($this->definitions as $name => $definition) {
+        foreach ($this->defaultComponentDefinitions() as $name => $definition) {
             $this->components[$name] = $this->components[$name] ?? $definition;
         }
     }
@@ -109,7 +99,7 @@ class Service extends Component implements ServiceInterface
     /**
      * Returns command factory.
      *
-     * @return \frostealth\yii2\aws\s3\base\CommandFactory
+     * @return \frostealth\yii2\aws\s3\CommandFactory
      */
     public function commands(): CommandFactory
     {
@@ -221,7 +211,7 @@ class Service extends Component implements ServiceInterface
     {
         if (!is_object($definition)) {
             $definition = !is_array($definition) ? ['class' => $definition] : $definition;
-            $definition = ArrayHelper::merge($this->definitions[$name], $definition);
+            $definition = ArrayHelper::merge($this->defaultComponentDefinitions()[$name], $definition);
         }
 
         $this->components[$name] = $definition;
@@ -239,6 +229,20 @@ class Service extends Component implements ServiceInterface
         $params = $this->getComponentParams($name);
 
         return \Yii::createObject($definition, $params);
+    }
+
+    /**
+     * @return array
+     */
+    protected function defaultComponentDefinitions()
+    {
+        return [
+            'client' => ['class' => 'Aws\S3\S3Client'],
+            'resolver' => ['class' => 'frostealth\yii2\aws\s3\HandlerResolver'],
+            'bus' => ['class' => 'frostealth\yii2\aws\s3\Bus'],
+            'builder' => ['class' => 'frostealth\yii2\aws\s3\CommandBuilder'],
+            'factory' => ['class' => 'frostealth\yii2\aws\s3\CommandFactory'],
+        ];
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace frostealth\yii2\aws\s3\base;
+namespace frostealth\yii2\aws\s3;
 
 use frostealth\yii2\aws\s3\commands\DeleteCommand;
 use frostealth\yii2\aws\s3\commands\ExistCommand;
@@ -15,12 +15,12 @@ use frostealth\yii2\aws\s3\interfaces;
 /**
  * Class CommandFactory
  *
- * @package frostealth\yii2\aws\s3\base
+ * @package frostealth\yii2\aws\s3
  */
 class CommandFactory
 {
     /** @var \frostealth\yii2\aws\s3\interfaces\CommandBuilder */
-    private $builder;
+    protected $builder;
 
     /**
      * CommandFactory constructor.

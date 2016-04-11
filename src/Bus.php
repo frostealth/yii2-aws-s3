@@ -1,13 +1,13 @@
 <?php
 
-namespace frostealth\yii2\aws\s3\base;
+namespace frostealth\yii2\aws\s3;
 
 use frostealth\yii2\aws\s3\interfaces;
 
 /**
  * Class Bus
  *
- * @package frostealth\yii2\aws\s3\base
+ * @package frostealth\yii2\aws\s3
  */
 class Bus implements interfaces\Bus
 {
