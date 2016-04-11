@@ -147,14 +147,4 @@ class CommandFactory
 
         return $command;
     }
-
-    /**
-     * @param string $commandClass
-     *
-     * @return \frostealth\yii2\aws\s3\interfaces\commands\Command
-     */
-    final protected function createCommand(string $commandClass)
-    {
-        return $this->builder->build($commandClass);
-    }
 }
