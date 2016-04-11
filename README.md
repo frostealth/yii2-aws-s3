@@ -2,7 +2,7 @@
 
 An Amazon S3 component for Yii2.
 
-[![License](https://poser.pugx.org/frostealth/yii2-aws-s3/license)](https://github.com/frostealth/yii2-aws-s3/blob/2.x/LICENSE.md)
+[![License](https://poser.pugx.org/frostealth/yii2-aws-s3/license)](https://github.com/frostealth/yii2-aws-s3/blob/2.x/LICENSE)
 [![Latest Stable Version](https://poser.pugx.org/frostealth/yii2-aws-s3/v/stable)](https://packagist.org/packages/frostealth/yii2-aws-s3)
 [![Total Downloads](https://poser.pugx.org/frostealth/yii2-aws-s3/downloads)](https://packagist.org/packages/frostealth/yii2-aws-s3)
 [![Latest Unstable Version](https://poser.pugx.org/frostealth/yii2-aws-s3/v/unstable)](https://packagist.org/packages/frostealth/yii2-aws-s3)
@@ -279,4 +279,4 @@ allow to execute this command immediately: `$command->setSomething('some value')
 ## License
 
 Yii2 AWS S3 is licensed under the MIT License.
-See the [LICENSE.md](LICENSE.md) file for more information.
+See the [LICENSE](LICENSE) file for more information.
