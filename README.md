@@ -126,9 +126,8 @@ $promise = $s3->execute($command->async());
 
 ### Custom commands
 
-Commands have two types: plain commands that's handled by the `PlainCommandHandler` 
-and commands with their own handlers.
-The plain commands wraps the native AWS S3 commands.
+Commands have two types: plain commands that's handled by the `PlainCommandHandler` and commands with their own handlers.
+The plain commands wrap the native AWS S3 commands.
 
 The plain commands must implement the `PlainCommand` interface and the rest must implement the `Command` interface.
 If the command doesn't implement the `PlainCommand` interface, it must have its own handler.
