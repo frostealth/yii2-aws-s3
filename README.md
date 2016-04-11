@@ -9,7 +9,7 @@ An Amazon S3 component for Yii2.
 
 ## Installation
 
-1. Run the [Composer](http://getcomposer.org/download/) command to install the latest stable version:
+1. Run the [Composer](http://getcomposer.org/download/) command to install the latest version:
 
     ```bash
     composer require frostealth/yii2-aws-s3 ~2.0@beta
@@ -36,7 +36,7 @@ An Amazon S3 component for Yii2.
 
 ## Basic usage
 
-### Usage the command factory and additional params
+### Usage of the command factory and additional params
 
 ```php
 /** @var \frostealth\yii2\aws\s3\Service $s3 */
@@ -126,17 +126,17 @@ $promise = $s3->execute($command->async());
 
 ### Custom commands
 
-Commands are divided into two types: plain commands that's handled by the `PlainCommandHandler` 
+Commands have two types: plain commands that's handled by the `PlainCommandHandler` 
 and commands with their own handlers.
-The plain commands are wrappers around the native AWS S3 commands.
+The plain commands wraps the native AWS S3 commands.
 
 The plain commands must implement the `PlainCommand` interface and the rest must implement the `Command` interface.
-The command that doesn't implement the `PlainCommand` interface must have its own handler.
+If the command doesn't implement the `PlainCommand` interface, it must have its own handler.
 
 Every handler must extend the `Handler` class or implement the `Handler` interface.
-Handlers are getting the `S3Client` instance into its constructor.
+Handlers gets the `S3Client` instance into its constructor.
 
-The implementation of the `HasBucket` and `HasAcl` interfaces allows to the command builder to set the values
+The implementation of the `HasBucket` and `HasAcl` interfaces allows the command builder to set the values
 of bucket and acl by default.
 
 To make the plain commands asynchronously, you have to implement the `Asynchronous` interface.
@@ -275,7 +275,7 @@ class MyPlainCommand implements PlainCommand, HasBucket
 ```
 
 Any command can extend the `ExecutableCommand` class or implement the `Executable` interface that will
-allow to execute this command immediately looking like this: `$command->setSomething('some value')->execute();`.
+allow to execute this command immediately: `$command->setSomething('some value')->execute();`.
 
 ## License
 
