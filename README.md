@@ -7,6 +7,10 @@ An Amazon S3 component for Yii2.
 [![Total Downloads](https://poser.pugx.org/frostealth/yii2-aws-s3/downloads)](https://packagist.org/packages/frostealth/yii2-aws-s3)
 [![Latest Unstable Version](https://poser.pugx.org/frostealth/yii2-aws-s3/v/unstable)](https://packagist.org/packages/frostealth/yii2-aws-s3)
 
+> Yii2-AWS-S3 uses [semantic versioning](http://semver.org/).
+
+> Version 2.x requires PHP 7. For PHP less 7.0 use [1.x](https://github.com/frostealth/yii2-aws-s3/blob/1.x).
+
 ## Installation
 
 1. Run the [Composer](http://getcomposer.org/download/) command to install the latest version:
@@ -80,8 +84,8 @@ $result = $s3->upload('filename.ext', '/path/to/local/file.ext');
 
 $result = $s3->restore('filename.ext', $days = 7);
 
-/** @var bool $isExisting */
-$isExisting = $s3->exist('filename.ext');
+/** @var bool $existence */
+$existence = $s3->exist('filename.ext');
 
 /** @var string $url */
 $url = $s3->getUrl('filename.ext');
