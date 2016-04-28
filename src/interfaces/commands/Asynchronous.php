@@ -10,9 +10,9 @@ namespace frostealth\yii2\aws\s3\interfaces\commands;
 interface Asynchronous
 {
     /**
-     * @param bool $async
+     * @return mixed
      */
-    public function async(bool $async = true);
+    public function async();
 
     /**
      * @return bool

@@ -13,13 +13,11 @@ trait Async
     private $isAsync = false;
 
     /**
-     * @param bool $async
-     *
      * @return $this
      */
-    final public function async(bool $async = true)
+    final public function async()
     {
-        $this->isAsync = $async;
+        $this->isAsync = true;
 
         return $this;
     }

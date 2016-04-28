@@ -25,7 +25,7 @@ class GetUrlCommand extends ExecutableCommand implements HasBucket
      */
     public function getBucket(): string
     {
-        return $this->bucket;
+        return (string)$this->bucket;
     }
 
     /**
@@ -45,7 +45,7 @@ class GetUrlCommand extends ExecutableCommand implements HasBucket
      */
     public function getFilename(): string
     {
-        return $this->filename;
+        return (string)$this->filename;
     }
 
     /**

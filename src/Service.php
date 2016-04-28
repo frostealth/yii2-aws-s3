@@ -37,7 +37,7 @@ class Service extends Component implements ServiceInterface
     const ALC_BUCKET_OWNER_FULL_CONTROL = 'bucket-owner-full-control';
 
     /** @var string */
-    public $defaultBucket;
+    public $defaultBucket = '';
 
     /** @var string */
     public $defaultAcl = '';
