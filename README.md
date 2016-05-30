@@ -164,7 +164,7 @@ class MyCommand implements Command, HasBucket
 
     protected $something;
 
-    public function getBucket(): string
+    public function getBucket()
     {
         return $this->bucket;
     }
@@ -176,7 +176,7 @@ class MyCommand implements Command, HasBucket
         return $this;
     }
 
-    public function getSomething(): string
+    public function getSomething()
     {
         return $this->something;
     }
@@ -241,7 +241,7 @@ class MyPlainCommand implements PlainCommand, HasBucket
 {
     protected $args = [];
     
-    public function getBucket(): string
+    public function getBucket()
     {
         return $this->args['Bucket'] ?? '';
     }
@@ -253,12 +253,12 @@ class MyPlainCommand implements PlainCommand, HasBucket
         return $this;
     }
     
-    public function getSomething(): string
+    public function getSomething()
     {
         return $this->args['something'] ?? '';
     }
     
-    public function setSomething(string $something)
+    public function setSomething($something)
     {
         $this->args['something'] = $something;
         
@@ -283,4 +283,5 @@ allow to execute this command immediately: `$command->setSomething('some value')
 ## License
 
 Yii2 AWS S3 is licensed under the MIT License.
+
 See the [LICENSE](LICENSE) file for more information.

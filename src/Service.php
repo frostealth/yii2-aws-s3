@@ -28,14 +28,6 @@ use yii\helpers\ArrayHelper;
  */
 class Service extends Component implements ServiceInterface
 {
-    const ACL_PRIVATE = 'private';
-    const ACL_PUBLIC_READ = 'public-read';
-    const ACL_PUBLIC_READ_WRITE = 'public-read-write';
-    const ACL_AWS_EXEC_READ = 'aws-exec-read';
-    const ACL_AUTHENTICATED_READ = 'authenticated-read';
-    const ACL_BUCKET_OWNER_READ = 'bucket-owner-read';
-    const ALC_BUCKET_OWNER_FULL_CONTROL = 'bucket-owner-full-control';
-
     /** @var string */
     public $defaultBucket = '';
 
