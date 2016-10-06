@@ -195,4 +195,45 @@ class UploadCommand extends ExecutableCommand implements HasBucket, HasAcl, Asyn
 
         return $this;
     }
+
+
+    /**
+     * @return array
+     */
+    public function getMetadata(): array
+    {
+        return $this->args['Metadata'] ?? [];
+    }
+
+    /**
+     * @param array $metadata
+     *
+     * @return $this
+     */
+    public function setMetadata(array $metadata)
+    {
+        $this->args['Metadata'] = $metadata;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContentType(): string
+    {
+        return $this->args['ContentType'] ?? '';
+    }
+
+    /**
+     * @param string $contentType
+     *
+     * @return $this
+     */
+    public function setContentType(string $contentType)
+    {
+        $this->args['ContentType'] = $contentType;
+
+        return $this;
+    }
 }
