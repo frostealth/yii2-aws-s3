@@ -45,13 +45,13 @@ class UploadCommand extends ExecutableCommand implements HasBucket, HasAcl, Asyn
     }
 
     /**
-     * @param string $bucket
+     * @param string $name
      *
      * @return $this
      */
-    public function setBucket(string $bucket)
+    public function inBucket(string $name)
     {
-        $this->bucket = $bucket;
+        $this->bucket = $name;
 
         return $this;
     }
@@ -69,7 +69,7 @@ class UploadCommand extends ExecutableCommand implements HasBucket, HasAcl, Asyn
      *
      * @return $this
      */
-    public function setAcl(string $acl)
+    public function withAcl(string $acl)
     {
         $this->acl = $acl;
 
@@ -89,7 +89,7 @@ class UploadCommand extends ExecutableCommand implements HasBucket, HasAcl, Asyn
      *
      * @return $this
      */
-    public function setSource($source)
+    public function withSource($source)
     {
         $this->source = $source;
 
@@ -109,7 +109,7 @@ class UploadCommand extends ExecutableCommand implements HasBucket, HasAcl, Asyn
      *
      * @return $this
      */
-    public function setFilename(string $filename)
+    public function withFilename(string $filename)
     {
         $this->filename = $filename;
 
@@ -129,7 +129,7 @@ class UploadCommand extends ExecutableCommand implements HasBucket, HasAcl, Asyn
      *
      * @return $this
      */
-    public function setPartSize(int $partSize)
+    public function withPartSize(int $partSize)
     {
         $this->options['part_size'] = $partSize;
 
@@ -149,7 +149,7 @@ class UploadCommand extends ExecutableCommand implements HasBucket, HasAcl, Asyn
      *
      * @return $this
      */
-    public function setConcurrency(int $concurrency)
+    public function withConcurrency(int $concurrency)
     {
         $this->options['concurrency'] = $concurrency;
 
@@ -169,7 +169,7 @@ class UploadCommand extends ExecutableCommand implements HasBucket, HasAcl, Asyn
      *
      * @return $this
      */
-    public function setMupThreshold(int $mupThreshold)
+    public function withMupThreshold(int $mupThreshold)
     {
         $this->options['mup_threshold'] = $mupThreshold;
 
@@ -189,11 +189,9 @@ class UploadCommand extends ExecutableCommand implements HasBucket, HasAcl, Asyn
      *
      * @return $this
      */
-    public function setContentType(string $contentType)
+    public function withContentType(string $contentType)
     {
-        $this->setParam('ContentType', $contentType);
-
-        return $this;
+        return $this->withParam('ContentType', $contentType);
     }
 
     /**
@@ -209,35 +207,33 @@ class UploadCommand extends ExecutableCommand implements HasBucket, HasAcl, Asyn
      *
      * @return $this
      */
-    public function setContentDisposition(string $contentDisposition)
+    public function withContentDisposition(string $contentDisposition)
     {
-        $this->setParam('ContentDisposition', $contentDisposition);
+        return $this->withParam('ContentDisposition', $contentDisposition);
+    }
+
+    /**
+     * @param string $name
+     * @param mixed  $default
+     *
+     * @return mixed
+     */
+    public function getParam(string $name, $default = null)
+    {
+        return $this->options['params'][$name] ?? $default;
+    }
+
+    /**
+     * @param string $name
+     * @param mixed  $value
+     *
+     * @return $this
+     */
+    public function withParam(string $name, $value)
+    {
+        $this->options['params'][$name] = $value;
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getParams(): array
-    {
-        return $this->options['params'] ?? [];
-    }
-
-    /**
-     * @param array $params
-     */
-    public function setParams(array $params)
-    {
-        $this->options['params'] = $params;
-    }
-
-    /**
-     * @return array
-     */
-    public function getOptions(): array
-    {
-        return $this->options;
     }
 
     /**
@@ -253,22 +249,12 @@ class UploadCommand extends ExecutableCommand implements HasBucket, HasAcl, Asyn
     }
 
     /**
-     * @param string $name
-     * @param mixed  $default
+     * @internal used by the handlers
      *
-     * @return mixed
+     * @return array
      */
-    protected function getParam(string $name, $default)
+    public function getOptions(): array
     {
-        return $this->options['params'][$name] ?? $default;
-    }
-
-    /**
-     * @param string $name
-     * @param mixed  $value
-     */
-    protected function setParam(string $name, $value)
-    {
-        $this->options['params'][$name] = $value;
+        return $this->options;
     }
 }

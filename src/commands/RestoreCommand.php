@@ -33,13 +33,13 @@ class RestoreCommand extends ExecutableCommand implements PlainCommand, HasBucke
     }
 
     /**
-     * @param string $bucket
+     * @param string $name
      *
      * @return $this
      */
-    public function setBucket(string $bucket)
+    public function inBucket(string $name)
     {
-        $this->args['Bucket'] = $bucket;
+        $this->args['Bucket'] = $name;
 
         return $this;
     }
@@ -57,7 +57,7 @@ class RestoreCommand extends ExecutableCommand implements PlainCommand, HasBucke
      *
      * @return $this
      */
-    public function setFilename(string $filename)
+    public function byFilename(string $filename)
     {
         $this->args['Key'] = $filename;
 
@@ -67,7 +67,7 @@ class RestoreCommand extends ExecutableCommand implements PlainCommand, HasBucke
     /**
      * @return int lifetime of the active copy in days
      */
-    public function getDays(): int
+    public function getLifetime(): int
     {
         return $this->args['Days'] ?? 0;
     }
@@ -77,7 +77,7 @@ class RestoreCommand extends ExecutableCommand implements PlainCommand, HasBucke
      *
      * @return $this
      */
-    public function setDays(int $days)
+    public function withLifetime(int $days)
     {
         $this->args['Days'] = $days;
 
@@ -97,7 +97,7 @@ class RestoreCommand extends ExecutableCommand implements PlainCommand, HasBucke
      *
      * @return $this
      */
-    public function setVersionId(string $versionId)
+    public function withVersionId(string $versionId)
     {
         $this->args['VersionId'] = $versionId;
 
@@ -105,6 +105,8 @@ class RestoreCommand extends ExecutableCommand implements PlainCommand, HasBucke
     }
 
     /**
+     * @internal used by the handlers
+     *
      * @return string
      */
     public function getName(): string
@@ -113,6 +115,8 @@ class RestoreCommand extends ExecutableCommand implements PlainCommand, HasBucke
     }
 
     /**
+     * @internal used by the handlers
+     *
      * @return array
      */
     public function toArgs(): array

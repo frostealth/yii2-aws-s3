@@ -21,7 +21,7 @@ final class PlainCommandHandler extends Handler
      */
     public function handle(PlainCommand $command)
     {
-        $awsCommand = $this->toAwsCommand($command);
+        $awsCommand = $this->transformToAwsCommand($command);
 
         /** @var \GuzzleHttp\Promise\PromiseInterface $promise */
         $promise = $this->s3Client->executeAsync($awsCommand);
@@ -44,7 +44,7 @@ final class PlainCommandHandler extends Handler
      *
      * @return \Aws\CommandInterface
      */
-    protected function toAwsCommand(PlainCommand $command): AwsCommand
+    protected function transformToAwsCommand(PlainCommand $command): AwsCommand
     {
         $args = array_filter($command->toArgs());
 

@@ -36,13 +36,13 @@ class PutCommand extends ExecutableCommand implements PlainCommand, HasBucket, H
     }
 
     /**
-     * @param string $bucket
+     * @param string $name
      *
      * @return $this
      */
-    public function setBucket(string $bucket)
+    public function inBucket(string $name)
     {
-        $this->args['Bucket'] = $bucket;
+        $this->args['Bucket'] = $name;
 
         return $this;
     }
@@ -60,7 +60,7 @@ class PutCommand extends ExecutableCommand implements PlainCommand, HasBucket, H
      *
      * @return $this
      */
-    public function setFilename(string $filename)
+    public function withFilename(string $filename)
     {
         $this->args['Key'] = $filename;
 
@@ -80,7 +80,7 @@ class PutCommand extends ExecutableCommand implements PlainCommand, HasBucket, H
      *
      * @return $this
      */
-    public function setAcl(string $acl)
+    public function withAcl(string $acl)
     {
         $this->args['ACL'] = $acl;
 
@@ -100,7 +100,7 @@ class PutCommand extends ExecutableCommand implements PlainCommand, HasBucket, H
      *
      * @return $this
      */
-    public function setBody($body)
+    public function withBody($body)
     {
         $this->args['Body'] = $body;
 
@@ -120,7 +120,7 @@ class PutCommand extends ExecutableCommand implements PlainCommand, HasBucket, H
      *
      * @return $this
      */
-    public function setMetadata(array $metadata)
+    public function withMetadata(array $metadata)
     {
         $this->args['Metadata'] = $metadata;
 
@@ -140,7 +140,7 @@ class PutCommand extends ExecutableCommand implements PlainCommand, HasBucket, H
      *
      * @return $this
      */
-    public function setContentType(string $contentType)
+    public function withContentType(string $contentType)
     {
         $this->args['ContentType'] = $contentType;
 
@@ -150,7 +150,7 @@ class PutCommand extends ExecutableCommand implements PlainCommand, HasBucket, H
     /**
      * @return mixed
      */
-    public function getExpires()
+    public function getExpiration()
     {
         return $this->args['Expires'] ?? null;
     }
@@ -160,7 +160,7 @@ class PutCommand extends ExecutableCommand implements PlainCommand, HasBucket, H
      *
      * @return $this
      */
-    public function setExpires($expires)
+    public function withExpiration($expires)
     {
         $this->args['Expires'] = $expires;
 
@@ -168,6 +168,8 @@ class PutCommand extends ExecutableCommand implements PlainCommand, HasBucket, H
     }
 
     /**
+     * @internal used by the handlers
+     *
      * @return string
      */
     public function getName(): string
@@ -176,6 +178,8 @@ class PutCommand extends ExecutableCommand implements PlainCommand, HasBucket, H
     }
 
     /**
+     * @internal used by the handlers
+     *
      * @return array
      */
     public function toArgs(): array

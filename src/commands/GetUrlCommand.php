@@ -29,14 +29,14 @@ class GetUrlCommand extends ExecutableCommand implements HasBucket
     }
 
     /**
-     * @param string $bucket
+     * @param string $name
      *
      * @return $this
      */
-    public function setBucket(string $bucket)
+    public function inBucket(string $name)
     {
-        $this->bucket = $bucket;
-        
+        $this->bucket = $name;
+
         return $this;
     }
 
@@ -53,10 +53,10 @@ class GetUrlCommand extends ExecutableCommand implements HasBucket
      *
      * @return $this
      */
-    public function setFilename(string $filename)
+    public function byFilename(string $filename)
     {
         $this->filename = $filename;
-        
+
         return $this;
     }
 }

@@ -17,10 +17,10 @@ trait Options
      *
      * @return $this
      */
-    final public function setOptions(array $value)
+    final public function withOptions(array $value)
     {
         $this->options = $value;
-        
+
         return $this;
     }
 
@@ -38,10 +38,10 @@ trait Options
      *
      * @return $this
      */
-    final public function setOption(string $name, $value)
+    final public function withOption(string $name, $value)
     {
         $this->options[$name] = $value;
-        
+
         return $this;
     }
 }

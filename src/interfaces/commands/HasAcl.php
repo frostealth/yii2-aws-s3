@@ -12,5 +12,5 @@ interface HasAcl
     /**
      * @param string $acl
      */
-    public function setAcl(string $acl);
+    public function withAcl(string $acl);
 }

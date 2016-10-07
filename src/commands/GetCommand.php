@@ -35,13 +35,13 @@ class GetCommand extends ExecutableCommand implements PlainCommand, HasBucket, A
     }
 
     /**
-     * @param string $bucket
+     * @param string $name
      *
      * @return $this
      */
-    public function setBucket(string $bucket)
+    public function inBucket(string $name)
     {
-        $this->args['Bucket'] = $bucket;
+        $this->args['Bucket'] = $name;
 
         return $this;
     }
@@ -59,7 +59,7 @@ class GetCommand extends ExecutableCommand implements PlainCommand, HasBucket, A
      *
      * @return $this
      */
-    public function setFilename(string $filename)
+    public function byFilename(string $filename)
     {
         $this->args['Key'] = $filename;
 
@@ -86,11 +86,13 @@ class GetCommand extends ExecutableCommand implements PlainCommand, HasBucket, A
     public function ifMatch(string $ifMatch)
     {
         $this->args['IfMatch'] = $ifMatch;
-        
+
         return $this;
     }
 
     /**
+     * @internal used by the handlers
+     *
      * @return string
      */
     public function getName(): string
@@ -99,6 +101,8 @@ class GetCommand extends ExecutableCommand implements PlainCommand, HasBucket, A
     }
 
     /**
+     * @internal used by the handlers
+     *
      * @return array
      */
     public function toArgs(): array

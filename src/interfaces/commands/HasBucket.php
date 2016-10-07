@@ -10,7 +10,7 @@ namespace frostealth\yii2\aws\s3\interfaces\commands;
 interface HasBucket
 {
     /**
-     * @param string $bucket
+     * @param string $name
      */
-    public function setBucket(string $bucket);
+    public function inBucket(string $name);
 }

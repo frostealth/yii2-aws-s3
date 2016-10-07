@@ -49,11 +49,11 @@ $s3 = Yii::$app->get('s3');
 /** @var \Aws\ResultInterface $result */
 $result = $s3->commands()->get('filename.ext')->saveAs('/path/to/local/file.ext')->execute();
 
-$result = $s3->commands()->put('filename.ext', 'body')->setContentType('text/plain')->execute();
+$result = $s3->commands()->put('filename.ext', 'body')->withContentType('text/plain')->execute();
 
 $result = $s3->commands()->delete('filename.ext')->execute();
 
-$result = $s3->commands()->upload('filename.ext', '/path/to/local/file.ext')->setAcl('private')->execute();
+$result = $s3->commands()->upload('filename.ext', '/path/to/local/file.ext')->withAcl('private')->execute();
 
 $result = $s3->commands()->restore('filename.ext', $days = 7)->execute();
 
@@ -118,7 +118,7 @@ $s3 = Yii::$app->get('s3');
 
 /** @var \frostealth\yii2\aws\s3\commands\GetCommand $command */
 $command = $s3->create(GetCommand::class);
-$command->setBucket('my-another-bucket')->setFilename('filename.ext')->saveAs('/path/to/local/file.ext');
+$command->inBucket('my-another-bucket')->byFilename('filename.ext')->saveAs('/path/to/local/file.ext');
 
 /** @var \Aws\ResultInterface $result */
 $result = $s3->execute($command);
@@ -169,7 +169,7 @@ class MyCommand implements Command, HasBucket
         return $this->bucket;
     }
     
-    public function setBucket(string $bucket)
+    public function inBucket(string $bucket)
     {
         $this->bucket = $bucket;
         
@@ -181,7 +181,7 @@ class MyCommand implements Command, HasBucket
         return $this->something;
     }
 
-    public function setSomething(string $something)
+    public function withSomething(string $something)
     {
         $this->something = $something;
 
@@ -221,7 +221,7 @@ $s3 = Yii::$app->get('s3');
 
 /** @var \app\components\s3\commands\MyCommand $command */
 $command = $s3->create(MyCommand::class);
-$command->setSomething('some value')->setOption('OptionName', 'value');
+$command->withSomething('some value')->withOption('OptionName', 'value');
 
 /** @var \Aws\ResultInterface $result */
 $result = $s3->execute($command);
@@ -234,8 +234,8 @@ Custom plain command looks like this:
 
 namespace app\components\s3\commands;
 
-use frostealth\yii2\aws\s3\interfaces\HasBucket;
-use frostealth\yii2\aws\s3\interfaces\PlainCommand;
+use frostealth\yii2\aws\s3\interfaces\commands\HasBucket;
+use frostealth\yii2\aws\s3\interfaces\commands\PlainCommand;
 
 class MyPlainCommand implements PlainCommand, HasBucket
 {
@@ -246,7 +246,7 @@ class MyPlainCommand implements PlainCommand, HasBucket
         return $this->args['Bucket'] ?? '';
     }
     
-    public function setBucket(string $bucket)
+    public function inBucket(string $bucket)
     {
         $this->args['Bucket'] = $bucket;
         
@@ -258,7 +258,7 @@ class MyPlainCommand implements PlainCommand, HasBucket
         return $this->args['something'] ?? '';
     }
     
-    public function setSomething($something)
+    public function withSomething($something)
     {
         $this->args['something'] = $something;
         
@@ -278,7 +278,7 @@ class MyPlainCommand implements PlainCommand, HasBucket
 ```
 
 Any command can extend the `ExecutableCommand` class or implement the `Executable` interface that will
-allow to execute this command immediately: `$command->setSomething('some value')->execute();`.
+allow to execute this command immediately: `$command->withSomething('some value')->execute();`.
 
 ## License
 

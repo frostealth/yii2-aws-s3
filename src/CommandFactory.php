@@ -41,7 +41,7 @@ class CommandFactory
     {
         /** @var GetCommand $command */
         $command = $this->builder->build(GetCommand::class);
-        $command->setFilename($filename);
+        $command->byFilename($filename);
 
         return $command;
     }
@@ -56,7 +56,7 @@ class CommandFactory
     {
         /** @var PutCommand $command */
         $command = $this->builder->build(PutCommand::class);
-        $command->setFilename($filename)->setBody($body);
+        $command->withFilename($filename)->withBody($body);
 
         return $command;
     }
@@ -70,7 +70,7 @@ class CommandFactory
     {
         /** @var DeleteCommand $command */
         $command = $this->builder->build(DeleteCommand::class);
-        $command->setFilename($filename);
+        $command->byFilename($filename);
 
         return $command;
     }
@@ -85,7 +85,7 @@ class CommandFactory
     {
         /** @var UploadCommand $command */
         $command = $this->builder->build(UploadCommand::class);
-        $command->setFilename($filename)->setSource($source);
+        $command->withFilename($filename)->withSource($source);
 
         return $command;
     }
@@ -100,7 +100,7 @@ class CommandFactory
     {
         /** @var RestoreCommand $command */
         $command = $this->builder->build(RestoreCommand::class);
-        $command->setFilename($filename)->setDays($days);
+        $command->byFilename($filename)->withLifetime($days);
 
         return $command;
     }
@@ -114,7 +114,7 @@ class CommandFactory
     {
         /** @var ExistCommand $command */
         $command = $this->builder->build(ExistCommand::class);
-        $command->setFilename($filename);
+        $command->byFilename($filename);
 
         return $command;
     }
@@ -128,7 +128,7 @@ class CommandFactory
     {
         /** @var GetUrlCommand $command */
         $command = $this->builder->build(GetUrlCommand::class);
-        $command->setFilename($filename);
+        $command->byFilename($filename);
 
         return $command;
     }
@@ -143,7 +143,7 @@ class CommandFactory
     {
         /** @var GetPresignedUrlCommand $command */
         $command = $this->builder->build(GetPresignedUrlCommand::class);
-        $command->setFilename($filename)->setExpires($expires);
+        $command->byFilename($filename)->withExpiration($expires);
 
         return $command;
     }

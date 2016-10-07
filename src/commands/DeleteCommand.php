@@ -35,13 +35,13 @@ class DeleteCommand extends ExecutableCommand implements PlainCommand, HasBucket
     }
 
     /**
-     * @param string $bucket
+     * @param string $name
      *
      * @return $this
      */
-    public function setBucket(string $bucket)
+    public function inBucket(string $name)
     {
-        $this->args['Bucket'] = $bucket;
+        $this->args['Bucket'] = $name;
 
         return $this;
     }
@@ -59,7 +59,7 @@ class DeleteCommand extends ExecutableCommand implements PlainCommand, HasBucket
      *
      * @return $this
      */
-    public function setFilename(string $filename)
+    public function byFilename(string $filename)
     {
         $this->args['Key'] = $filename;
 
@@ -79,7 +79,7 @@ class DeleteCommand extends ExecutableCommand implements PlainCommand, HasBucket
      *
      * @return $this
      */
-    public function setVersionId(string $versionId)
+    public function withVersionId(string $versionId)
     {
         $this->args['VersionId'] = $versionId;
 
@@ -87,6 +87,8 @@ class DeleteCommand extends ExecutableCommand implements PlainCommand, HasBucket
     }
 
     /**
+     * @internal used by the handlers
+     *
      * @return string
      */
     public function getName(): string
@@ -95,6 +97,8 @@ class DeleteCommand extends ExecutableCommand implements PlainCommand, HasBucket
     }
 
     /**
+     * @internal used by the handlers
+     *
      * @return array
      */
     public function toArgs(): array

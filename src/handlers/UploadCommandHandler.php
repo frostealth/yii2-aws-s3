@@ -21,9 +21,9 @@ final class UploadCommandHandler extends Handler
      */
     public function handle(UploadCommand $command)
     {
-        $source = $this->toStream($command->getSource());
+        $source = $this->sourceToStream($command->getSource());
         $options = array_filter($command->getOptions());
-        
+
         $promise = $this->s3Client->uploadAsync(
             $command->getBucket(),
             $command->getFilename(),
@@ -31,7 +31,7 @@ final class UploadCommandHandler extends Handler
             $command->getAcl(),
             $options
         );
-        
+
         return $command->isAsync() ? $promise : $promise->wait();
     }
 
@@ -42,7 +42,7 @@ final class UploadCommandHandler extends Handler
      *
      * @return StreamInterface
      */
-    protected function toStream($source): StreamInterface
+    protected function sourceToStream($source): StreamInterface
     {
         if (is_string($source)) {
             $source = Psr7\try_fopen($source, 'r+');

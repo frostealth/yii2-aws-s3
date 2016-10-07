@@ -18,7 +18,7 @@ class GetPresignedUrlCommand extends ExecutableCommand implements HasBucket
     protected $args = [];
 
     /** @var mixed */
-    protected $expires;
+    protected $expiration;
 
     /**
      * @return string
@@ -29,13 +29,13 @@ class GetPresignedUrlCommand extends ExecutableCommand implements HasBucket
     }
 
     /**
-     * @param string $bucket
+     * @param string $name
      *
      * @return $this
      */
-    public function setBucket(string $bucket)
+    public function inBucket(string $name)
     {
-        $this->args['Bucket'] = $bucket;
+        $this->args['Bucket'] = $name;
 
         return $this;
     }
@@ -53,7 +53,7 @@ class GetPresignedUrlCommand extends ExecutableCommand implements HasBucket
      *
      * @return $this
      */
-    public function setFilename(string $filename)
+    public function byFilename(string $filename)
     {
         $this->args['Key'] = $filename;
 
@@ -63,24 +63,26 @@ class GetPresignedUrlCommand extends ExecutableCommand implements HasBucket
     /**
      * @return mixed
      */
-    public function getExpires()
+    public function getExpiration()
     {
-        return $this->expires;
+        return $this->expiration;
     }
 
     /**
-     * @param int|string|\DateTime $expires
+     * @param int|string|\DateTime $expiration
      *
      * @return $this
      */
-    public function setExpires($expires)
+    public function withExpiration($expiration)
     {
-        $this->expires = $expires;
+        $this->expiration = $expiration;
 
         return $this;
     }
 
     /**
+     * @internal used by the handlers
+     *
      * @return array
      */
     public function getArgs(): array

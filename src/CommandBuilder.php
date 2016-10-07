@@ -58,11 +58,11 @@ class CommandBuilder implements interfaces\CommandBuilder
     protected function prepareCommand(interfaces\commands\Command $command)
     {
         if ($command instanceof interfaces\commands\HasBucket) {
-            $command->setBucket($this->bucket);
+            $command->inBucket($this->bucket);
         }
 
         if ($command instanceof interfaces\commands\HasAcl) {
-            $command->setAcl($this->acl);
+            $command->withAcl($this->acl);
         }
     }
 }
