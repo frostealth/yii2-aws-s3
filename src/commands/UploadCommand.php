@@ -177,6 +177,62 @@ class UploadCommand extends ExecutableCommand implements HasBucket, HasAcl, Asyn
     }
 
     /**
+     * @return string
+     */
+    public function getContentType(): string
+    {
+        return $this->getParam('ContentType', '');
+    }
+
+    /**
+     * @param string $contentType
+     *
+     * @return $this
+     */
+    public function setContentType(string $contentType)
+    {
+        $this->setParam('ContentType', $contentType);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContentDisposition(): string
+    {
+        return $this->getParam('ContentDisposition', '');
+    }
+
+    /**
+     * @param string $contentDisposition
+     *
+     * @return $this
+     */
+    public function setContentDisposition(string $contentDisposition)
+    {
+        $this->setParam('ContentDisposition', $contentDisposition);
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParams(): array
+    {
+        return $this->options['params'] ?? [];
+    }
+
+    /**
+     * @param array $params
+     */
+    public function setParams(array $params)
+    {
+        $this->options['params'] = $params;
+    }
+
+    /**
      * @return array
      */
     public function getOptions(): array
@@ -194,5 +250,25 @@ class UploadCommand extends ExecutableCommand implements HasBucket, HasAcl, Asyn
         $this->options['before_upload'] = $beforeUpload;
 
         return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param mixed  $default
+     *
+     * @return mixed
+     */
+    protected function getParam(string $name, $default)
+    {
+        return $this->options['params'][$name] ?? $default;
+    }
+
+    /**
+     * @param string $name
+     * @param mixed  $value
+     */
+    protected function setParam(string $name, $value)
+    {
+        $this->options['params'][$name] = $value;
     }
 }
