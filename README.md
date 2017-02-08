@@ -16,7 +16,7 @@ An Amazon S3 component for Yii2.
 1. Run the [Composer](http://getcomposer.org/download/) command to install the latest version:
 
     ```bash
-    composer require frostealth/yii2-aws-s3 ~2.0@rc
+    composer require frostealth/yii2-aws-s3 ~2.0
     ```
 
 2. Add the component to `config/main.php`
