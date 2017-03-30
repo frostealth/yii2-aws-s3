@@ -57,6 +57,8 @@ $result = $s3->commands()->upload('filename.ext', '/path/to/local/file.ext')->wi
 
 $result = $s3->commands()->restore('filename.ext', $days = 7)->execute();
 
+$result = $s3->commands()->list('/path')->execute();
+
 /** @var bool $exist */
 $exist = $s3->commands()->exist('filename.ext')->execute();
 
@@ -168,11 +170,11 @@ class MyCommand implements Command, HasBucket
     {
         return $this->bucket;
     }
-    
+
     public function inBucket(string $bucket)
     {
         $this->bucket = $bucket;
-        
+
         return $this;
     }
 
@@ -240,36 +242,36 @@ use frostealth\yii2\aws\s3\interfaces\commands\PlainCommand;
 class MyPlainCommand implements PlainCommand, HasBucket
 {
     protected $args = [];
-    
+
     public function getBucket()
     {
         return $this->args['Bucket'] ?? '';
     }
-    
+
     public function inBucket(string $bucket)
     {
         $this->args['Bucket'] = $bucket;
-        
+
         return $this;
     }
-    
+
     public function getSomething()
     {
         return $this->args['something'] ?? '';
     }
-    
+
     public function withSomething($something)
     {
         $this->args['something'] = $something;
-        
+
         return $this;
     }
-    
+
     public function getName(): string
     {
         return 'AwsS3CommandName';
     }
-    
+
     public function toArgs(): array
     {
         return $this->args;
