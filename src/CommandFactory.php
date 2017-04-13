@@ -10,6 +10,7 @@ use frostealth\yii2\aws\s3\commands\GetUrlCommand;
 use frostealth\yii2\aws\s3\commands\PutCommand;
 use frostealth\yii2\aws\s3\commands\RestoreCommand;
 use frostealth\yii2\aws\s3\commands\UploadCommand;
+use frostealth\yii2\aws\s3\commands\ListCommand;
 use frostealth\yii2\aws\s3\interfaces;
 
 /**
@@ -115,6 +116,20 @@ class CommandFactory
         /** @var ExistCommand $command */
         $command = $this->builder->build(ExistCommand::class);
         $command->byFilename($filename);
+
+        return $command;
+    }
+
+    /**
+     * @param string $prefix
+     *
+     * @return \frostealth\yii2\aws\s3\commands\ListCommand
+     */
+    public function list(string $prefix): ListCommand
+    {
+        /** @var ListCommand $command */
+        $command = $this->builder->build(ListCommand::class);
+        $command->byPrefix($prefix);
 
         return $command;
     }
