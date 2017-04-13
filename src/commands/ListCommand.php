@@ -20,11 +20,11 @@ use GuzzleHttp\Promise\PromiseInterface;
  */
 class ListCommand extends ExecutableCommand implements PlainCommand, HasBucket, Asynchronous
 {
-  use Async;
-  use Options;
+    use Async;
+    use Options;
 
-  /** @var array */
-  protected $args = [];
+    /** @var array */
+    protected $args = [];
 
     /**
      * @return string
