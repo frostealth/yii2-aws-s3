@@ -20,6 +20,7 @@ use yii\helpers\ArrayHelper;
  * @method ResultInterface  delete(string $filename)
  * @method ResultInterface  upload(string $filename, $source)
  * @method ResultInterface  restore(string $filename, int $days)
+ * @method ResultInterface  list(string $prefix)
  * @method bool             exist(string $filename)
  * @method string           getUrl(string $filename)
  * @method string           getPresignedUrl(string $filename, $expires)

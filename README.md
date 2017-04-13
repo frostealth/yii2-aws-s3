@@ -57,7 +57,7 @@ $result = $s3->commands()->upload('filename.ext', '/path/to/local/file.ext')->wi
 
 $result = $s3->commands()->restore('filename.ext', $days = 7)->execute();
 
-$result = $s3->commands()->list('/path')->execute();
+$result = $s3->commands()->list('path/')->execute();
 
 /** @var bool $exist */
 $exist = $s3->commands()->exist('filename.ext')->execute();
@@ -86,6 +86,8 @@ $result = $s3->upload('filename.ext', '/path/to/local/file.ext');
 
 $result = $s3->restore('filename.ext', $days = 7);
 
+$result = $s3->list('path/');
+
 /** @var bool $exist */
 $exist = $s3->exist('filename.ext');
 
@@ -110,6 +112,8 @@ $promise = $s3->commands()->put('filename.ext', 'body')->async()->execute();
 $promise = $s3->commands()->delete('filename.ext')->async()->execute();
 
 $promise = $s3->commands()->upload('filename.ext', 'source')->async()->execute();
+
+$promise = $s3->commands()->list('path/')->async()->execute();
 ```
 
 ## Advanced usage
