@@ -45,6 +45,8 @@ class Service extends Component implements ServiceInterface
      * Initializes the object.
      * This method is invoked at the end of the constructor after the object is initialized with the
      * given configuration.
+     *
+     * @throws InvalidConfigException
      */
     public function init()
     {
@@ -148,6 +150,14 @@ class Service extends Component implements ServiceInterface
     public function setDebug($debug)
     {
         $this->clientConfig['debug'] = $debug;
+    }
+
+    /**
+     * @param array $options
+     */
+    public function setHttpOptions(array $options)
+    {
+        $this->clientConfig['http'] = $options;
     }
 
     /**
