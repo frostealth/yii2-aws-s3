@@ -5,15 +5,15 @@ namespace frostealth\yii2\aws\s3;
 use Aws\S3\S3Client;
 use frostealth\yii2\aws\s3\handlers\PlainCommandHandler;
 use frostealth\yii2\aws\s3\interfaces;
+use yii\base\Configurable;
 use yii\base\Exception;
-use yii\base\Object;
 
 /**
  * Class HandlerResolver
  *
  * @package frostealth\yii2\aws\s3
  */
-class HandlerResolver extends Object implements interfaces\HandlerResolver
+class HandlerResolver implements interfaces\HandlerResolver, Configurable
 {
     /** @var array */
     protected $handlers = [];
@@ -28,12 +28,24 @@ class HandlerResolver extends Object implements interfaces\HandlerResolver
      * HandlerResolver constructor.
      *
      * @param \Aws\S3\S3Client $s3Client
-     * @param array            $config
+     * @param array            $config name-value pairs that will be used to initialize the object properties
      */
     public function __construct(S3Client $s3Client, array $config = [])
     {
+        $this->configure($config);
         $this->s3Client = $s3Client;
-        parent::__construct($config);
+    }
+
+    /**
+     * @param array $properties
+     *
+     * @return void
+     */
+    private function configure(array $properties)
+    {
+        foreach ($properties as $name => $value) {
+            $this->{$name} = $value;
+        }
     }
 
     /**
