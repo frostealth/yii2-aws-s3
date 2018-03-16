@@ -16,7 +16,7 @@ An Amazon S3 component for Yii2.
 1. Run the [Composer](http://getcomposer.org/download/) command to install the latest version:
 
     ```bash
-    composer require ujin-pererva/yii2-aws-s3 ~2.0
+    composer require frostealth/yii2-aws-s3 ~2.0
     ```
 
 2. Add the component to `config/main.php`
@@ -59,7 +59,7 @@ $result = $s3->commands()->restore('filename.ext', $days = 7)->execute();
 
 $result = $s3->commands()->list('path/')->execute();
 
-$result = $s3->commands()->listV2('path/', 1000, 'filename')->execute();
+$result = $s3->commands()->listV2('path/', $filename = '', $limit = 1000)->execute();
 
 /** @var bool $exist */
 $exist = $s3->commands()->exist('filename.ext')->execute();
@@ -90,7 +90,7 @@ $result = $s3->restore('filename.ext', $days = 7);
 
 $result = $s3->list('path/');
 
-$result = $s3->listV2('path/', 1000, 'filename');
+$result = $s3->listV2('path/', $filename = '', $limit = 1000);
 
 /** @var bool $exist */
 $exist = $s3->exist('filename.ext');
@@ -118,6 +118,8 @@ $promise = $s3->commands()->delete('filename.ext')->async()->execute();
 $promise = $s3->commands()->upload('filename.ext', 'source')->async()->execute();
 
 $promise = $s3->commands()->list('path/')->async()->execute();
+
+$promise = $s3->commands()->listV2('path/', $filename = '', $limit = 1000)->async()->execute();
 ```
 
 ## Advanced usage
