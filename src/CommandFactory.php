@@ -10,7 +10,7 @@ use frostealth\yii2\aws\s3\commands\GetUrlCommand;
 use frostealth\yii2\aws\s3\commands\PutCommand;
 use frostealth\yii2\aws\s3\commands\RestoreCommand;
 use frostealth\yii2\aws\s3\commands\UploadCommand;
-use frostealth\yii2\aws\s3\commands\ListCommand;
+use frostealth\yii2\aws\s3\commands\ListTwoCommand;
 use frostealth\yii2\aws\s3\interfaces;
 
 /**
@@ -122,14 +122,18 @@ class CommandFactory
 
     /**
      * @param string $prefix
+     * @param string $after
+     * @param int limit
      *
-     * @return \frostealth\yii2\aws\s3\commands\ListCommand
+     * @return \frostealth\yii2\aws\s3\commands\ListTwoCommand
      */
-    public function list(string $prefix): ListCommand
+    public function list(string $prefix, string $after = '', int $limit = 1000): ListTwoCommand
     {
-        /** @var ListCommand $command */
-        $command = $this->builder->build(ListCommand::class);
+        /** @var ListTwoCommand $command */
+        $command = $this->builder->build(ListTwoCommand::class);
         $command->byPrefix($prefix);
+        $command->byMaxKeys($limit);
+        $command->byStartAfter($after);
 
         return $command;
     }
