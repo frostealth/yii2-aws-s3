@@ -16,7 +16,7 @@ An Amazon S3 component for Yii2.
 1. Run the [Composer](http://getcomposer.org/download/) command to install the latest version:
 
     ```bash
-    composer require frostealth/yii2-aws-s3 ~2.0
+    composer require ujin-pererva/yii2-aws-s3 ~2.0
     ```
 
 2. Add the component to `config/main.php`
@@ -59,6 +59,8 @@ $result = $s3->commands()->restore('filename.ext', $days = 7)->execute();
 
 $result = $s3->commands()->list('path/')->execute();
 
+$result = $s3->commands()->listV2('path/', 1000, 'filename')->execute();
+
 /** @var bool $exist */
 $exist = $s3->commands()->exist('filename.ext')->execute();
 
@@ -87,6 +89,8 @@ $result = $s3->upload('filename.ext', '/path/to/local/file.ext');
 $result = $s3->restore('filename.ext', $days = 7);
 
 $result = $s3->list('path/');
+
+$result = $s3->listV2('path/', 1000, 'filename');
 
 /** @var bool $exist */
 $exist = $s3->exist('filename.ext');
