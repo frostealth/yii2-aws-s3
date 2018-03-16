@@ -1,5 +1,5 @@
 {
-    "name": "frostealth/yii2-aws-s3",
+    "name": "UjinPererva/yii2-aws-s3",
     "type": "yii2-extension",
     "description": "An Amazon S3 component for Yii2",
     "keywords": ["yii2", "aws", "s3", "aws-s3", "yii2-aws", "yii2-s3"],
