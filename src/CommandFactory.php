@@ -7,6 +7,7 @@ use frostealth\yii2\aws\s3\commands\ExistCommand;
 use frostealth\yii2\aws\s3\commands\GetCommand;
 use frostealth\yii2\aws\s3\commands\GetPresignedUrlCommand;
 use frostealth\yii2\aws\s3\commands\GetUrlCommand;
+use frostealth\yii2\aws\s3\commands\ListCommand;
 use frostealth\yii2\aws\s3\commands\PutCommand;
 use frostealth\yii2\aws\s3\commands\RestoreCommand;
 use frostealth\yii2\aws\s3\commands\UploadCommand;
@@ -125,9 +126,25 @@ class CommandFactory
      * @param string $after
      * @param int limit
      *
+     * @return \frostealth\yii2\aws\s3\commands\ListCommand
+     */
+    public function list(string $prefix, string $after = '', int $limit = 1000): ListCommand
+    {
+        /** @var ListCommand $command */
+        $command = $this->builder->build(ListCommand::class);
+        $command->byPrefix($prefix);
+
+        return $command;
+    }
+
+    /**
+     * @param string $prefix
+     * @param string $after
+     * @param int limit
+     *
      * @return \frostealth\yii2\aws\s3\commands\ListTwoCommand
      */
-    public function list(string $prefix, string $after = '', int $limit = 1000): ListTwoCommand
+    public function listV2(string $prefix, string $after = '', int $limit = 1000): ListTwoCommand
     {
         /** @var ListTwoCommand $command */
         $command = $this->builder->build(ListTwoCommand::class);
