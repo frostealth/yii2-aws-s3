@@ -36,7 +36,10 @@ class Service extends Component implements ServiceInterface
     public $defaultAcl = '';
 
     /** @var array S3Client config */
-    protected $clientConfig = ['version' => '2006-03-01'];
+    protected $clientConfig = [
+        'version' => '2006-03-01',
+        'endpoint' => 'https://nyc3.digitaloceanspaces.com',
+    ];
 
     /** @var array */
     private $components = [];
