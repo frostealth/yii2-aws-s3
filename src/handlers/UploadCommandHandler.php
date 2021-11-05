@@ -4,7 +4,7 @@ namespace frostealth\yii2\aws\s3\handlers;
 
 use frostealth\yii2\aws\s3\commands\UploadCommand;
 use frostealth\yii2\aws\s3\base\handlers\Handler;
-use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -45,9 +45,9 @@ final class UploadCommandHandler extends Handler
     protected function sourceToStream($source): StreamInterface
     {
         if (is_string($source)) {
-            $source = Psr7\try_fopen($source, 'r+');
+            $source = Utils::tryFopen($source, 'r+');
         }
 
-        return Psr7\stream_for($source);
+        return Utils::streamFor($source);
     }
 }
