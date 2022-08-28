@@ -26,10 +26,7 @@ An Amazon S3 component for Yii2.
         // ...
         's3' => [
             'class' => 'frostealth\yii2\aws\s3\Service',
-            'credentials' => [ // Aws\Credentials\CredentialsInterface|array|callable
-                'key' => 'my-key',
-                'secret' => 'my-secret',
-            ],
+            'credentials' => 'new Aws\Credentials\Credentials('my-key', 'my-secret'),
             'region' => 'my-region',
             'defaultBucket' => 'my-bucket',
             'defaultAcl' => 'public-read',
